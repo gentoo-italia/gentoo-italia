@@ -1,0 +1,6 @@
+<layman>
+<overlay type="git" src="git://gitorious.org/viralex-overlay/mainline.git" contact="alessandro.rosetti@gmail.com" name="viralex">
+ <link>http://gitorious.org/projects/viralex-overlay</link>
+ <description>An overlay for Gentoo by Viralex </description>
+</overlay>
+</layman>
