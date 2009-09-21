@@ -1,0 +1,17 @@
+README
+
+A Gentoo overlay.
+
+Setting up layman
+
+Edit /etc/layman/layman.cfg:
+----------------------------------------------------------------------
+overlays  : http://www.gentoo.org/proj/en/overlays/layman-global.txt
+            http://pani.webhop.org/download/overlays.xml
+----------------------------------------------------------------------
+
+and add the overlay using layman.
+----------------------------------------------------------------------
+			layman -f
+			layman -a viralex
+----------------------------------------------------------------------

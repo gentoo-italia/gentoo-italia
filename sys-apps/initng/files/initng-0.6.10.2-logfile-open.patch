@@ -1,0 +1,17 @@
+r5239 | dragoran | 2007-08-07 07:54:17 -0400 (Tue, 07 Aug 2007) | 1 line
+
+fix build with glibc >= 2.6.90
+
+Index: src/plugins/logfile/initng_logfile.c
+===================================================================
+--- src/plugins/logfile/initng_logfile.c	(revision 5238)
++++ src/plugins/logfile/initng_logfile.c	(revision 5239)
+@@ -71,7 +71,7 @@ static int program_output(s_event * event)
+ 	filename_fixed = fix_variables(filename, data->service);
+ 
+ 	/* open the file */
+-	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND);
++	fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+ 	if (fd < 1)
+ 	{
+ 		F_("Error opening %s, err : %s\n", filename, strerror(errno));
