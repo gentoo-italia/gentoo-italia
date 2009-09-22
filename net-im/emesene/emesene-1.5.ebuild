@@ -1,17 +1,17 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 inherit eutils python
 
 DESCRIPTION="Platform independent MSN Messenger client written in Python+GTK"
 HOMEPAGE="http://www.emesene.org"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
+KEYWORDS="amd64 x86"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+
 IUSE=""
 
 DEPEND=">=dev-lang/python-2.4.3
