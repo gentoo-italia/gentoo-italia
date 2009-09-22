@@ -1,6 +1,5 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/initng/initng-9999.ebuild,v 1.13 2009/02/08 19:35:58 vapier Exp $
 
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="git://gitorious.org/initng/initng.git"
@@ -22,8 +21,8 @@ IUSE=""
 
 RDEPEND=""
 DEPEND="${RDEPEND}
-	>=dev-util/cmake-2.1"
-PDEPEND="sys-apps/initng-ifiles"
+	>=dev-util/cmake-2.6"
+PDEPEND="sys-apps/initng-scripts"
 
 plugin_warning() {
 	if [[ -z ${INITNG_PLUGINS} ]] ; then
