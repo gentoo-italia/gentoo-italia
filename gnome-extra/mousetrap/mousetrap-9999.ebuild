@@ -5,7 +5,7 @@ EGIT_REPO_URI="http://git.gnome.org./cgit/mousetrap/"
 EGIT_PROJECT="mousetrap"
 SRC_URI=""
 
-DESCRIPTION="A cam mouse intercace"
+DESCRIPTION="A webcam motion detection mouse interface"
 HOMEPAGE="http://git.gnome.org./cgit/mousetrap/"
 
 LICENSE="GPL-2"
