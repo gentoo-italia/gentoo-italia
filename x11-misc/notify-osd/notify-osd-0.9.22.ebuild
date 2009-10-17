@@ -22,10 +22,10 @@ DEPEND=">=dev-libs/dbus-glib-0.76
 	x11-libs/libwnck"
 RDEPEND=""
 
-src_configure() {
+src_configure() { 
+	epatch "${FILESDIR}"/*.patch
 	append-flags -fno-strict-aliasing	# -Werror causes build to fail
 	default
-        epatch "${FILESDIR}"/*.patch
 }
 
 src_install() {
