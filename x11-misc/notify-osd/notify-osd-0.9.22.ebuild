@@ -25,6 +25,7 @@ RDEPEND=""
 src_configure() {
 	append-flags -fno-strict-aliasing	# -Werror causes build to fail
 	default
+        epatch "${FILESDIR}"/*.patch
 }
 
 src_install() {
