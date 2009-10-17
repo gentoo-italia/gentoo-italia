@@ -1,0 +1,28 @@
+--- gmxdgsoundlib.orig.py	2009-06-11 11:01:03.000000000 +0200
++++ gmxdgsoundlib.py	2009-06-11 11:01:35.000000000 +0200
+@@ -46,15 +46,16 @@
+     
+     inherits = None
+     directories = "."
+-    with open(path, "r") as f:
+-        for line in f:
+-            line = line.strip()
+-            
+-            if line.startswith("Inherits="):
+-                inherits = line.split("=")[1]
+-            if line.startswith("Directories="):
+-                # So far we simply choose the first directory - don't know how to choose
+-                directories = line.split("=")[1].split(",")[0]
++    f = open(path, "r")
++    for line in f:
++        line = line.strip()
++        
++        if line.startswith("Inherits="):
++            inherits = line.split("=")[1]
++        if line.startswith("Directories="):
++            # So far we simply choose the first directory - don't know how to choose
++            directories = line.split("=")[1].split(",")[0]
++    f.close()
+     
+     return (inherits, directories)
+ 
