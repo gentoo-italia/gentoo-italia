@@ -15,8 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~hppa ~ppc ~x86"
 IUSE="nls debug"
 
-RDEPEND=">=gnome-extra/indicator-applet-0.1
-	net-im/pidgin[gtk]
+RDEPEND="net-im/pidgin[gtk]
 	>=x11-libs/gtk+-2
 	>=x11-libs/libnotify-0.3.2"
 
