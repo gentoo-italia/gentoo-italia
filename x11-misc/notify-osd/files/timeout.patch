@@ -5,7 +5,7 @@
  #define DEFAULT_FADE_IN_TIMEOUT      250
  #define DEFAULT_FADE_OUT_TIMEOUT     1000
 -#define DEFAULT_ON_SCREEN_TIMEOUT    10000
-+#define DEFAULT_ON_SCREEN_TIMEOUT    4000
++#define DEFAULT_ON_SCREEN_TIMEOUT    3000
  
  /* GConf-keys to watch */
  #define GCONF_UI_FONT_NAME        "/desktop/gnome/interface/font_name"
