@@ -1,2 +1,3 @@
+=media-gfx/gimp-2.7.0
 =net-libs/webkit-gtk-1.1.15.2
 =net-im/emesene-9999
