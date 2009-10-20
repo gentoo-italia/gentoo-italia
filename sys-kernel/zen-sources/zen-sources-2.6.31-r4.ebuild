@@ -15,7 +15,7 @@ K_NOSETEXTRAVERSION="don't_set_it"
 
 DESCRIPTION="Zen-Sources Kernel Patchset"
 HOMEPAGE="http://zen-kernel.org"
-ZEN_URI="http://zen-kernel.org/${KV}/${KV_FULL}.patch${COMPRESSTYPE}"
+ZEN_URI="http://zen-kernel.org/2.6.31/${KV_FULL}.patch${COMPRESSTYPE}"
 
 SRC_URI="${KERNEL_URI} ${ZEN_URI}"
 
