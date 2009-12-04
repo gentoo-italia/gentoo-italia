@@ -34,7 +34,6 @@ src_unpack() {
 	sed -i -e 's| -s||g' \
 		-e 's|@mangrp@|root|g' Makefile.in
 
-	epatch "${FILESDIR}"/gcc-4.3.patch
 	epatch "${FILESDIR}"/${P}-glibc-2.10.patch
 }
 
