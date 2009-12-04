@@ -33,8 +33,6 @@ src_unpack() {
 	# Don't strip and set correct mangrp
 	sed -i -e 's| -s||g' \
 		-e 's|@mangrp@|root|g' Makefile.in
-
-	epatch "${FILESDIR}"/${P}-glibc-2.10.patch
 }
 
 src_compile() {
