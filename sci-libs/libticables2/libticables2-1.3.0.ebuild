@@ -23,7 +23,7 @@ DEPEND="${RDEPEND}
 
 src_unpack() {
 	unpack tilibs.tar.gz
-        unpack tilibs2/${P}.tar.gz
+        unpack  /var/tmp/portage/sci-libs/${P}/work/tilibs2/${P}.tar.gz
 }
 
 src_prepare() {
