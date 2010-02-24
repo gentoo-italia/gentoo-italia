@@ -26,7 +26,7 @@ RDEPEND="dev-lang/perl
 	magic? ( sys-apps/file )"
 
 DEPEND="${RDEPEND}
-	>=dev-lang/ocaml-3.10.2[ocamlopt?]
+	>=dev-lang/ocaml-3.10.2
 	sys-apps/sed"
 
 MLUSER="p2p"
