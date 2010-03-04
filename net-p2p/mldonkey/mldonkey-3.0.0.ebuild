@@ -57,7 +57,7 @@ src_prepare() {
 	cd "${S}"/config
 	eautoconf
 	cd "${S}"
-	#use ocamlopt || sed -i -e "s/ocamlopt/idontwantocamlopt/g" "${S}/config/configure" || die "failed to disable ocamlopt"
+	use ocamlopt || sed -i -e "s/ocamlopt/idontwantocamlopt/g" "${S}/config/configure" || die "failed to disable ocamlopt"
 }
 
 src_configure() {
@@ -87,7 +87,7 @@ src_configure() {
 		$(use_enable gnutella gnutella2) \
 		$(use_enable gd) \
 		$(use_enable magic) \
-		--enable-ocamlver=3.10 \
+		--enable-ocamlver=3.11.1 \
 		${myconf} || die "econf failed"
 }
 
