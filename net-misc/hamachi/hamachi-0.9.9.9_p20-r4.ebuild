@@ -39,7 +39,7 @@ pkg_setup() {
 }
 
 src_compile() {	
-    epatch "${FILESDIR}"/tuncfg.patch
+    #epatch "${FILESDIR}"/tuncfg.patch
 	# Compile Tuncfg
 	make -sC "${S}"/tuncfg || die "Compiling of tunecfg failed"
 }
