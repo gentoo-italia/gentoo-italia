@@ -30,7 +30,6 @@ pkg_preinst() {
 	# Add group "hamachi" & user "hamachi"
 	enewgroup ${PN}
 	enewuser ${PN} -1 -1 /dev/null ${PN}
-	epatch "${FILESDIR}"/tuncfg.patch
 }
 
 pkg_setup() {
@@ -39,7 +38,8 @@ pkg_setup() {
 	check_extra_config
 }
 
-src_compile() {
+src_compile() {	
+    epatch "${FILESDIR}"/tuncfg.patch
 	# Compile Tuncfg
 	make -sC "${S}"/tuncfg || die "Compiling of tunecfg failed"
 }
