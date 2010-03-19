@@ -1,0 +1,12 @@
+--- tuncfg.c    11 Oct 2005 07:09:27 -0000      1.1.1.1.2.1
++++ tuncfg.c    27 Dec 2005 22:19:23 -0000
+@@ -233,6 +233,8 @@
+			}
+			printf("tuncfg: ioctl() 0 %s\n", ifr.ifr_name);
+
++			strcpy(ifr.ifr_name, "ham0");
++
+			// query mac
+			tmp = socket(AF_INET, SOCK_DGRAM, 0);
+			if (tmp < 0)
+
