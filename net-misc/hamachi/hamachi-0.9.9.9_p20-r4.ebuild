@@ -32,6 +32,10 @@ pkg_preinst() {
 	enewuser ${PN} -1 -1 /dev/null ${PN}
 }
 
+src_prepare() {
+    epatch "${FILESDIR}"/tuncfg.patch
+}
+
 pkg_setup() {
 	einfo "Checking your kernel configuration for TUN/TAP support."
 	CONFIG_CHECK="~TUN"
@@ -39,7 +43,7 @@ pkg_setup() {
 }
 
 src_compile() {	
-    #epatch "${FILESDIR}"/tuncfg.patch
+    
 	# Compile Tuncfg
 	make -sC "${S}"/tuncfg || die "Compiling of tunecfg failed"
 }
