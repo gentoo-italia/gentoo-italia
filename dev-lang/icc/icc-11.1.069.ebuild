@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/icc/icc-11.1.056.ebuild,v 1.6 2009/10/08 03:48:20 bicatali Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-lang/icc/icc-11.1.069.ebuild,v 1.6 2010/02/25 03:48:20 bicatali Exp $
 
 EAPI=2
 
@@ -10,14 +10,14 @@ PB=cproc
 PACKAGEID="l_${PB}_p_${PV}"
 RELEASE="$(get_version_component_range 1-2)"
 BUILD="$(get_version_component_range 3)"
-PID=1583
+PID=1703
 
 DESCRIPTION="Intel compiler suite for Linux"
 HOMEPAGE="http://www.intel.com/software/products/compilers/clin/"
 SRC_COM="http://registrationcenter-download.intel.com/irc_nas/${PID}/${PACKAGEID}"
-SRC_URI="amd64? ( ${SRC_COM}_intel64.tgz )
-	ia64? ( ${SRC_COM}_intel64.tgz )
-	x86?  ( ${SRC_COM}_intel64.tgz )" # don't want to download ia32 or ia64 -.-
+SRC_URI="amd64? ( ${SRC_COM}.tgz )
+	ia64? ( ${SRC_COM}_ia64.tgz )
+	x86?  ( ${SRC_COM}_ia32.tgz )"
 
 LICENSE="Intel-SDP"
 SLOT="0"
@@ -114,14 +114,27 @@ src_install() {
 		|| die "Copying ${PN} failed"
 
 	local envf=05icfc
-	cat > ${envf} <<-EOF
-		PATH="${ROOT}${DESTINATION}/bin/${IARCH}"
-		ROOTPATH="${ROOT}${DESTINATION}/bin/${IARCH}"
-		LDPATH="${ROOT}${DESTINATION}/lib/${IARCH}"
-		LIBRARY_PATH="${ROOT}${DESTINATION}/lib/${IARCH}"
-		NLSPATH="${ROOT}${DESTINATION}/lib/locale/en_US/%N"
-		MANPATH="${ROOT}${DESTINATION}/man/en_US"
-	EOF
+if use amd64 ; then
+echo "Found AMD64"
+cat > ${envf} <<-EOF
+PATH="${ROOT}${DESTINATION}/bin/${IARCH}:${ROOT}${DESTINATION}/bin/ia32"
+ROOTPATH="${ROOT}${DESTINATION}/bin/${IARCH}:${ROOT}${DESTINATION}/bin/ia32"
+LDPATH="${ROOT}${DESTINATION}/lib/${IARCH}:${ROOT}${DESTINATION}/lib/ia32"
+LIBRARY_PATH="${ROOT}${DESTINATION}/lib/${IARCH}:${ROOT}${DESTINATION}/lib/ia32"
+NLSPATH="${ROOT}${DESTINATION}/lib/locale/${IARCH}/en_US/%N"
+MANPATH="${ROOT}${DESTINATION}/man/en_US"
+EOF
+else
+echo "Found ${IARCH}"
+cat > ${envf} <<-EOF
+PATH="${ROOT}${DESTINATION}/bin/${IARCH}"
+ROOTPATH="${ROOT}${DESTINATION}/bin/${IARCH}"
+LDPATH="${ROOT}${DESTINATION}/lib/${IARCH}"
+LIBRARY_PATH="${ROOT}${DESTINATION}/lib/${IARCH}"
+NLSPATH="${ROOT}${DESTINATION}/lib/locale/en_US/%N"
+MANPATH="${ROOT}${DESTINATION}/man/en_US"
+EOF
+fi
 	if [[ ! -e "${ROOT}"etc/env.d/${envf} ]] ||
 		[[ -n $(diff "${ROOT}"etc/env.d/${envf} ./${envf}) ]]; then
 		doenvd ${envf} || die "doenvd ${envf} failed"
