@@ -87,7 +87,7 @@ src_configure() {
 		$(use_enable gnutella gnutella2) \
 		$(use_enable gd) \
 		$(use_enable magic) \
-		--enable-ocamlver=3.11.1 \
+		--enable-ocamlver=3.11.2 \
 		${myconf} || die "econf failed"
 }
 
