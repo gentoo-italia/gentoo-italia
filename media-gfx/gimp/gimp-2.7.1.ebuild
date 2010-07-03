@@ -37,7 +37,6 @@ RDEPEND=">=dev-libs/glib-2.18.1
 	exif? ( >=media-libs/libexif-0.6.15 )
 	lcms? ( media-libs/lcms )
 	mng? ( media-libs/libmng )
-	pdf? ( >=virtual/poppler-glib-0.3.1[cairo] )
 	png? ( >=media-libs/libpng-1.2.2 )
 	python?	( >=dev-lang/python-2.5.0
 		>=dev-python/pygtk-2.10.4 )
