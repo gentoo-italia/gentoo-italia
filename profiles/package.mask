@@ -1,3 +1,4 @@
+=net-p2p/mldonkey-3.0.4
 =media-gfx/gimp-2.7.0
 =net-libs/webkit-gtk-1.1.15.2
 =net-im/emesene-9999
