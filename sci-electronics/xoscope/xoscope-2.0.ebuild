@@ -8,7 +8,7 @@ SRC_URI="http://prdownloads.sourceforge.net/xoscope/${P}.tgz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64 x86 amd64"
 IUSE=""
 
 #DEPEND="gtk? ( media-libs/gtk+ )"
@@ -21,14 +21,13 @@ src_unpack() {
 }
 
 src_compile() {
-	emake ${MYCNF} || die "emake failed"
+   econf || die
+   emake || die "make failed" 
 }
-
 
 src_install() {
-	emake DESTDIR="${D}" PREFIX="/usr" install || die "Install failed"
+	emake install DESTDIR="${D}" || die
 }
-
 
 pkg_postinst() {
 	elog "To report a problem goto:"
