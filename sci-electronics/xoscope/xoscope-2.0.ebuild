@@ -14,13 +14,8 @@ IUSE=""
 #DEPEND="gtk? ( media-libs/gtk+ )"
 RDEPEND=""
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	epatch "${FILESDIR}/xoscope-2.0-gtkdatabox.patch"
-}
-
-src_compile() {
+src_compile() {	
+   epatch "${FILESDIR}/xoscope-2.0-gtkdatabox.patch"
    econf || die
    emake || die "make failed" 
 }
