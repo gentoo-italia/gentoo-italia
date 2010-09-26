@@ -9,9 +9,9 @@ SRC_URI="http://prdownloads.sourceforge.net/xoscope/${P}.tgz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="gtk"
+IUSE=""
 
-DEPEND="gtk? ( media-libs/gtk+ )"
+#DEPEND="gtk? ( media-libs/gtk+ )"
 RDEPEND=""
 
 src_unpack() {
