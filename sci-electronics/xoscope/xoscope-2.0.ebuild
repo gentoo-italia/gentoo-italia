@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+inherit eutils
+
 DESCRIPTION="Xoscope is a digital oscilloscope using input from a sound card"
 HOMEPAGE="http://xoscope.sourceforge.net/"
 SRC_URI="http://prdownloads.sourceforge.net/xoscope/${P}.tgz"
