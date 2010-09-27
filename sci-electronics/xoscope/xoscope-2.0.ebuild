@@ -10,20 +10,21 @@ SRC_URI="http://prdownloads.sourceforge.net/xoscope/${P}.tgz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 x86 amd64"
-IUSE=""
+KEYWORDS="~x86 ~amd64 "
+IUSE="esd"
 
-#DEPEND="gtk? ( media-libs/gtk+ )"
-RDEPEND=""
+DEPEND=">=x11-libs/gtk+-2.0 
+		esd? ( media-sound/esound )"
 
 src_compile() {	
-   epatch "${FILESDIR}/xoscope-2.0-gtkdatabox.patch"
-   econf || die
-   emake || die "make failed" 
+	epatch "${FILESDIR}/xoscope-2.0-gtkdatabox.patch"
+	econf $(use_with gtk) $(use_with esd)  || die
+	emake || die "make failed" 
 }
 
 src_install() {
 	emake install DESTDIR="${D}" || die
+	dodoc AUTHORS COPYING ChangeLog NEWS README* TODO* || die "dodoc falied" 
 }
 
 pkg_postinst() {
