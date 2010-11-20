@@ -1,4 +1,4 @@
 =app-emulation/qemu-0.12.5
-=media-gfx/gimp-2.7.0
+=media-gfx/gimp-2.7.1
 =net-im/emesene-9999
-=net-analyzer/wireshark-1.4.1
+=net-analyzer/wireshark-1.4.2
