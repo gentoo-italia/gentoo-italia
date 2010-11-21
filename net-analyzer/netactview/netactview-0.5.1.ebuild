@@ -26,7 +26,7 @@ src_compile() {
 
 src_install() {
 	emake install DESTDIR="${D}" || die
-	dodoc AUTHORS COPYING ChangeLog NEWS README* TODO* || die "dodoc falied" 
+	dodoc AUTHORS COPYING ChangeLog NEWS README* || die "dodoc falied" 
 }
 
 pkg_postinst() {
