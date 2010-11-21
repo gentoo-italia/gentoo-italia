@@ -6,7 +6,7 @@ inherit eutils
 
 DESCRIPTION="A graphical network connections viewer for Linux, similar in functionality with Netstat"
 HOMEPAGE="netactview.sourceforge.net/"
-SRC_URI="https://sourceforge.net/projects/netactview/files/netactview/netactview-${P}/${P}.tar.bz2"
+SRC_URI="http://prdownloads.sourceforge.net/netactview/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
