@@ -20,7 +20,7 @@ DEPEND=">=x11-libs/gtk+-2.0 \
         >=gnome-base/gconf-2.0"
 
 src_compile() {	
-	econf $(use_with gtk) || die
+	econf || die
 	emake || die "make failed" 
 }
 
