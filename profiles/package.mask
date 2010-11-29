@@ -3,3 +3,4 @@
 =net-im/emesene-9999
 =net-analyzer/wireshark-1.4.1
 =net-analyzer/wireshark-1.4.2
+=dev-ruby/rcairo-1.10.0*
