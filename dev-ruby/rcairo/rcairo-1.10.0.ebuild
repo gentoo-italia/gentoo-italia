@@ -41,10 +41,6 @@ DEPEND="${DEPEND}
 ruby_add_bdepend "test? ( >=dev-ruby/test-unit-2.1.0-r1:2 )"
 
 all_ruby_prepare() {
-	# it fails, badly, as it expects the .pc to be frozen in time,
-	# which it isn't...
-	rm test/test_pkg_config.rb || die
-
 	# fix two strange assert calls
 	sed -i \
 		-e 's:assert_true(:assert(:' \
