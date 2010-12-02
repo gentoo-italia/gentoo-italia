@@ -85,7 +85,6 @@ src_prepare() {
 
 	# upstream patch 2808915
 	epatch "${FILESDIR}"/${PN}-3.6.4-jdkroot.patch
-	epatch "${FILESDIR}"/${PN}-3.6.8-H26x-ffmpeg.patch
 
 	# h224 really needs h323 ?
 	# TODO: get a confirmation in ml
@@ -152,6 +151,8 @@ src_configure() {
 	if use fax; then
 		forcedconf="${forcedconf} --enable-statistics"
 	fi
+
+	epatch "${FILESDIR}"/${PN}-3.6.8-H26x-ffmpeg.patch
 
 	# --with-libavcodec-source-dir should _not_ be set, it's for trunk sources
 	# versioncheck: check for ptlib version
