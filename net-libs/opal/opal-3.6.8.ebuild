@@ -1,19 +1,21 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/net-libs/opal/opal-3.6.8.ebuild,v 1.3 2010/11/01 22:40:14 halcy0n Exp $
 
 EAPI="2"
 
 inherit eutils autotools toolchain-funcs java-pkg-opt-2 flag-o-matic
 
+HTMLV="3.6.7" # There is no 3.6.8 release of htmldoc
 DESCRIPTION="C++ class library normalising numerous telephony protocols"
 HOMEPAGE="http://www.opalvoip.org/"
-SRC_URI="mirror://sourceforge/opalvoip/${P}.tar.bz2"
+SRC_URI="mirror://sourceforge/opalvoip/${P}.tar.bz2
+	doc? ( mirror://sourceforge/opalvoip/${PN}-${HTMLV}-htmldoc.tar.bz2 )"
 
 LICENSE="MPL-1.0"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~sparc ~x86"
-IUSE="+audio capi celt debug dtmf examples fax ffmpeg h224 h281 h323 iax
+KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="+audio capi celt debug doc dtmf examples fax ffmpeg h224 h281 h323 iax
 ipv6 ivr ixj java ldap lid +plugins sbc sip sipim srtp ssl stats swig theora
 +video vpb vxml wav x264 x264-static xml"
 
@@ -26,7 +28,7 @@ RDEPEND=">=net-libs/ptlib-2.6.6[stun,debug=,audio?,dtmf?,ipv6?,ldap?,ssl?,video?
 	plugins? ( dev-libs/ilbc-rfc3951
 		media-sound/gsm
 		capi? ( net-dialup/capi4k-utils )
-		celt? ( >=media-libs/celt-0.5.0 )
+		celt? ( media-libs/celt )
 		ffmpeg? ( >=media-video/ffmpeg-0.5[encode] )
 		ixj? ( sys-kernel/linux-headers )
 		sbc? ( media-libs/libsamplerate )
@@ -37,7 +39,7 @@ RDEPEND=">=net-libs/ptlib-2.6.6[stun,debug=,audio?,dtmf?,ipv6?,ldap?,ssl?,video?
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	>=sys-devel/gcc-3
-	java? ( swig? ( || ( dev-lang/swig[java] >dev-lang/swig-1.3.36 ) )
+	java? ( swig? ( dev-lang/swig )
 		>=virtual/jdk-1.4 )"
 
 # NOTES:
@@ -53,6 +55,8 @@ DEPEND="${RDEPEND}
 pkg_setup() {
 	# workaround for bug 282838
 	append-flags "-fno-visibility-inlines-hidden"
+
+	append-flags -D__STDC_CONSTANT_MACROS #324323
 
 	# need >=gcc-3
 	if [[ $(gcc-major-version) -lt 3 ]]; then
@@ -152,8 +156,6 @@ src_configure() {
 		forcedconf="${forcedconf} --enable-statistics"
 	fi
 
-	epatch "${FILESDIR}"/${PN}-3.6.8-H26x-ffmpeg.patch
-
 	# --with-libavcodec-source-dir should _not_ be set, it's for trunk sources
 	# versioncheck: check for ptlib version
 	# shared: should always be enabled for a lib
@@ -223,6 +225,10 @@ src_compile() {
 
 src_install() {
 	emake DESTDIR="${D}" install || die "emake install failed"
+
+	if use doc; then
+		dohtml -r "${WORKDIR}"/html/* docs/* || die "dohtml failed"
+	fi
 
 	# ChangeLog is not standard
 	dodoc ChangeLog-${PN}-v${PV//./_}.txt || die "dodoc failed"
