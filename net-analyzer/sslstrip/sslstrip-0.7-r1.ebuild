@@ -1,13 +1,11 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-analyzer/sslstrip/sslstrip-0.7.ebuild,v 1.2 2009/12/21 13:20:56 ssuominen Exp $
+# $Header: $
 
 EAPI=3
 PYTHON_DEPEND="2"
-#SUPPORT_PYTHON_ABIS="1"
-#RESTRICT_PYTHON_ABIS="3.*"
 
-inherit eutils
+inherit eutils python distutils
 
 DESCRIPTION="This tool provides a demonstration of the HTTPS stripping attacks."
 HOMEPAGE="http://thoughtcrime.org/software/sslstrip/"
@@ -18,8 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-lang/python
-        dev-python/twisted-web"
+RDEPEND=">=dev-lang/python-2.5
+         >=dev-python/twisted-web-8.1.0"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
@@ -27,5 +25,19 @@ src_prepare() {
 }
 
 src_install() {
-    python setup.py install
+    dodir /usr/lib/"${PN}"
+	insinto /usr/lib/"${PN}"
+    doins sslstrip.py lock.ico
+    dodir /usr/lib/${PN}/sslstrip
+    insinto /usr/lib/${PN}/sslstrip
+    doins sslstrip/*.py
+    dosbin "${FILESDIR}/sslstrip"
+}
+
+pkg_postinst() {
+    python_mod_optimize
+}
+
+pkg_postrm() {
+    python_mod_cleanup
 }
