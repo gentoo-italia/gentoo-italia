@@ -38,6 +38,3 @@ pkg_postinst() {
     python_mod_optimize
 }
 
-pkg_postrm() {
-    python_mod_cleanup
-}
