@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-libs/python
+DEPEND="dev-lang/python
         dev-python/twisted-web"
 
 src_prepare() {
