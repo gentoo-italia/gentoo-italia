@@ -8,8 +8,9 @@ inherit flag-o-matic
 
 DESCRIPTION="Canonical's on-screen-display notification agent."
 HOMEPAGE="https://launchpad.net/notify-osd"
-SRC_URI="http://launchpad.net/notify-osd/trunk/ubuntu-9.10/+download/${P}.tar.gz"
- 
+SRC_URI="http://launchpad.net/notify-osd/lucid/ubuntu-10.04-beta-2/+download/notify-osd-0.9.29.tar.gz"
+#SRC_URI="http://launchpad.net/notify-osd/trunk/ubuntu-9.10/+download/${P}.tar.gz"
+
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"

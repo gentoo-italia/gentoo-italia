@@ -1,0 +1,242 @@
+Index: libfm/src/base/fm-path.c
+===================================================================
+--- libfm.orig/src/base/fm-path.c
++++ libfm/src/base/fm-path.c
+@@ -29,6 +29,10 @@
+ #include <limits.h>
+ #include <glib/gi18n-lib.h>
+ 
++static FmPath* root = NULL;
++static FmPath* home = NULL;
++static FmPath* trash_root = NULL;
++
+ static FmPath* root_path = NULL;
+ 
+ static char* home_dir = NULL;
+@@ -230,6 +234,87 @@ static inline FmPath* _fm_path_reuse_exi
+ #endif
+ 
+ /**
++ * fm_path_new
++ * DEPRECATED function
++ */
++
++FmPath* fm_path_new(const char* path)
++{
++    /* FIXME: need to canonicalize paths */
++
++    if( path[0] == '/' ) /* if this is a absolute native path */
++    {
++        if (path[1])
++            return fm_path_new_relative(root, path + 1);
++        else
++            /* special case: handle root dir */
++            return fm_path_ref( root );
++    }
++    else if ( path[0] == '~' && (path[1] == '\0' || path[1]=='/') ) /* home dir */
++    {
++        ++path;
++        return *path ? fm_path_new_relative(home, path) : fm_path_ref(home);
++    }
++    else /* then this should be a URL */
++    {
++        FmPath* parent, *ret;
++        char* colon = strchr(path, ':');
++        char* hier_part;
++        char* rest;
++        int root_len;
++
++        /* return root instead of NULL for invalid URIs. fix #2988010. */
++        if( !colon ) /* this shouldn't happen */
++            return fm_path_ref(root); /* invalid path FIXME: should we treat it as relative path? */
++
++        /* FIXME: convert file:/// to local native path */
++        hier_part = colon+1;
++        if( hier_part[0] == '/' )
++        {
++            if(hier_part[1] == '/') /* this is a scheme:// form URI */
++                rest = hier_part + 2;
++            else /* a malformed URI */
++                rest = hier_part + 1;
++
++            if(*rest == '/') /* :/// means there is no authoraty part */
++                ++rest;
++            else /* we are now at autority part, something like <username>@domain/ */
++            {
++                while( *rest && *rest != '/' )
++                    ++rest;
++                if(*rest == '/')
++                    ++rest;
++            }
++
++            if( strncmp(path, "trash:", 6) == 0 ) /* in trash:// */
++            {
++                if(*rest)
++                    return fm_path_new_relative(trash_root, rest);
++                else
++                    return fm_path_ref(trash_root);
++            }
++            /* other URIs which requires special handling, like computer:/// */
++        }
++        else /* this URI doesn't have //, like mailto: */
++        {
++            /* FIXME: is this useful to file managers? */
++            rest = colon + 1;
++        }
++        root_len = (rest - path);
++        parent = fm_path_new_child_len(NULL, path, root_len);
++        if(*rest)
++        {
++            ret = fm_path_new_relative(parent, rest);
++            fm_path_unref(parent);
++        }
++        else
++            ret = parent;
++        return ret;
++    }
++    return fm_path_new_relative(NULL, path);
++}
++
++/**
+  * fm_path_new_child_len
+  * @parent: a parent path
+  * @basename: basename of a direct child of @parent directory in glib
+@@ -926,7 +1011,7 @@ FmPathList* fm_path_list_new_from_uris(c
+     FmPathList* pl = fm_path_list_new();
+     for(uri = uris; *uri; ++uri)
+     {
+-        FmPath* path = fm_path_new(*uri);
++        FmPath* path = fm_path_new_for_uri(*uri);
+         fm_list_push_tail_noref(pl, path);
+     }
+     return pl;
+Index: libfm/src/base/fm-path.h
+===================================================================
+--- libfm.orig/src/base/fm-path.h
++++ libfm/src/base/fm-path.h
+@@ -62,7 +62,7 @@ struct _FmPath
+ void _fm_path_init();
+ 
+ /* fm_path_new is deprecated. Use fm_path_new_for_str */
+-#define fm_path_new(path)   fm_path_new_for_str(path)
++FmPath*	fm_path_new(const char* path);
+ 
+ FmPath* fm_path_new_for_path(const char* path_name);
+ FmPath* fm_path_new_for_uri(const char* uri);
+Index: libfm/src/gtk/fm-folder-model.c
+===================================================================
+--- libfm.orig/src/gtk/fm-folder-model.c
++++ libfm/src/gtk/fm-folder-model.c
+@@ -256,14 +256,14 @@ FmFolderModel *fm_folder_model_new(FmFol
+     return model;
+ }
+ 
+-static inline FmFolderItem* fm_folder_item_new(FmFileInfo* inf)
++inline FmFolderItem* fm_folder_item_new(FmFileInfo* inf)
+ {
+     FmFolderItem* item = g_slice_new0(FmFolderItem);
+     item->inf = fm_file_info_ref(inf);
+     return item;
+ }
+ 
+-static inline void fm_folder_item_free(FmFolderItem* item)
++inline void fm_folder_item_free(FmFolderItem* item)
+ {
+     if( item->icon )
+         g_object_unref(item->icon);
+Index: libfm/src/gtk/fm-gtk-utils.c
+===================================================================
+--- libfm.orig/src/gtk/fm-gtk-utils.c
++++ libfm/src/gtk/fm-gtk-utils.c
+@@ -149,7 +149,7 @@ FmPath* fm_get_user_input_path(GtkWindow
+     }
+ 
+     str = _fm_user_input_dialog_run( dlg,  GTK_ENTRY( entry ) );
+-    path = fm_path_new(str);
++    path = fm_path_new_for_str(str);
+ 
+     g_free(path_str);
+     g_free(str);
+@@ -264,7 +264,7 @@ FmPath* fm_select_folder(GtkWindow* pare
+         char* file = gtk_file_chooser_get_filename(chooser);
+         if(!file)
+             file = gtk_file_chooser_get_uri(chooser);
+-        path = fm_path_new(file);
++        path = fm_path_new_for_str(file);
+         g_free(file);
+     }
+     else
+@@ -327,7 +327,7 @@ g_debug("on_mount_action_finished");
+     g_main_loop_quit(data->loop);
+ }
+ 
+-static gboolean fm_do_mount(GtkWindow* parent, GObject* obj, MountAction action, gboolean interactive)
++gboolean fm_do_mount(GtkWindow* parent, GObject* obj, MountAction action, gboolean interactive)
+ {
+     gboolean ret;
+     struct MountData* data = g_new0(struct MountData, 1);
+Index: libfm/src/base/fm-file-launcher.c
+===================================================================
+--- libfm.orig/src/base/fm-file-launcher.c
++++ libfm/src/base/fm-file-launcher.c
+@@ -90,7 +90,7 @@ gboolean fm_launch_desktop_entry(GAppLau
+                                  * e.g: If this URL points to the another desktop entry file, and it
+                                  * points to yet another desktop entry file, this can create a
+                                  * infinite loop. This is a extremely rare case. */
+-                                FmPath* path = fm_path_new(url);
++                                FmPath* path = fm_path_new_for_str(url);
+                                 _uris = g_list_prepend(_uris, path);
+                                 ret = fm_launch_paths(ctx, _uris, launcher, user_data);
+                                 g_list_free(_uris);
+Index: libfm/src/base/fm-folder.c
+===================================================================
+--- libfm.orig/src/base/fm-folder.c
++++ libfm/src/base/fm-folder.c
+@@ -470,7 +470,7 @@ FmFolder* fm_folder_get_for_path(FmPath*
+ 
+ FmFolder* fm_folder_get_for_path_name(const char* path)
+ {
+-    FmPath* fm_path = fm_path_new(path);
++    FmPath* fm_path = fm_path_new_for_str(path);
+     FmFolder* folder = fm_folder_get_internal(fm_path, NULL);
+     fm_path_unref(fm_path);
+     return folder;
+Index: libfm/src/demo/libfm-demo.c
+===================================================================
+--- libfm.orig/src/demo/libfm-demo.c
++++ libfm/src/demo/libfm-demo.c
+@@ -42,7 +42,7 @@ int main(int argc, char** argv)
+ 
+     if(argc > 1)
+     {
+-        FmPath* path = fm_path_new(argv[1]);
++        FmPath* path = fm_path_new_for_str(argv[1]);
+         fm_main_win_chdir(FM_MAIN_WIN(w), path);
+         fm_path_unref(path);
+     }
+Index: libfm/src/gtk/fm-folder-view.c
+===================================================================
+--- libfm.orig/src/gtk/fm-folder-view.c
++++ libfm/src/gtk/fm-folder-view.c
+@@ -821,7 +821,7 @@ gboolean fm_folder_view_chdir_by_name(Fm
+     if( G_UNLIKELY( !path_str ) )
+         return FALSE;
+ 
+-	path = fm_path_new(path_str);
++	path = fm_path_new_for_str(path_str);
+ 	if(!path) /* might be a malformed path */
+ 		return FALSE;
+ 	ret = fm_folder_view_chdir(fv, path);
+Index: libfm/src/gtk/fm-path-entry.c
+===================================================================
+--- libfm.orig/src/gtk/fm-path-entry.c
++++ libfm/src/gtk/fm-path-entry.c
+@@ -163,7 +163,7 @@ static void fm_path_entry_changed(GtkEdi
+     if( !fm_path_equal_str(priv->path, original_key, key_dir_len) )
+     {
+         gchar* new_path = g_path_get_dirname(original_key);
+-        FmPath *new_fm_path = fm_path_new(new_path);
++        FmPath *new_fm_path = fm_path_new_for_str(new_path);
+         g_free(new_path);
+         if( new_fm_path != NULL )
+         {

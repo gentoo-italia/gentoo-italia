@@ -32,9 +32,13 @@ src_install() {
     insinto /usr/lib/${PN}/sslstrip
     doins sslstrip/*.py
     dosbin "${FILESDIR}/sslstrip"
+    dodoc README
 }
 
 pkg_postinst() {
     python_mod_optimize
 }
 
+pkg_postrm() {
+    python_mod_cleanup
+}
