@@ -27,7 +27,8 @@ src_install() {
 	emake DESTDIR="${D}"/usr install || die "emake install failed"
 	dodoc CHANGELOG README || die "dodoc failed"
 	if use gtk ; then
-		doicon media/tucan.svg || die "doicon failed"
+		#doicon media/tucan.svg || die "doicon failed"
+        newicon media/tucan.svg "${PN}.svg"
 		make_desktop_entry tucan Tucan
 	fi
 }
