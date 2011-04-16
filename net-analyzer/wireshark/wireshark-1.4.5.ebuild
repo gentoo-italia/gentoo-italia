@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-analyzer/wireshark/wireshark-1.4.0_rc2.ebuild,v 1.1 2010/07/30 10:27:15 pva Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-analyzer/wireshark/wireshark-1.4.4.ebuild,v 1.7 2011/03/13 11:23:51 xarthisius Exp $
 
-EAPI=2
+EAPI="3"
 PYTHON_DEPEND="python? 2"
 inherit libtool flag-o-matic eutils toolchain-funcs python
 
@@ -13,7 +13,7 @@ SRC_URI="http://www.wireshark.org/download/src/all-versions/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="alpha amd64 hppa ia64 ppc ppc64 sparc x86 ~x86-fbsd"
 IUSE="adns ares doc doc-pdf gtk ipv6 lua gcrypt geoip kerberos
 profile +pcap pcre portaudio python +caps selinux smi ssl threads zlib"
 
@@ -21,10 +21,10 @@ RDEPEND=">=dev-libs/glib-2.14.0:2
 	zlib? ( sys-libs/zlib
 		!=sys-libs/zlib-1.2.4 )
 	smi? ( net-libs/libsmi )
-	x11-misc/xdg-utils
 	gtk? ( >=x11-libs/gtk+-2.4.0:2
 		x11-libs/pango
-		dev-libs/atk )
+		dev-libs/atk
+		x11-misc/xdg-utils )
 	ssl? ( net-libs/gnutls )
 	gcrypt? ( dev-libs/libgcrypt )
 	pcap? ( net-libs/libpcap )
@@ -41,7 +41,6 @@ RDEPEND=">=dev-libs/glib-2.14.0:2
 DEPEND="${RDEPEND}
 	doc? ( dev-libs/libxslt
 		dev-libs/libxml2
-		www-client/elinks
 		app-doc/doxygen
 		doc-pdf? ( dev-java/fop ) )
 	>=dev-util/pkgconfig-0.15.0
@@ -51,6 +50,44 @@ DEPEND="${RDEPEND}
 	sys-devel/flex"
 
 S=${WORKDIR}/${MY_P}
+
+# borrowed from GSoC2010_Gentoo_Capabilities by constanze and flameyeys
+# @FUNCTION: fcaps
+# @USAGE: fcaps {uid:gid} {file-mode} {cap1[,cap2,...]} {file}
+# @RETURN: 0 if all okay; non-zero if failure and fallback
+# @DESCRIPTION:
+# fcaps sets the specified capabilities in the effective and permitted set of
+# the given file. In case of failure fcaps sets the given file-mode.
+fcaps() {
+	local uid_gid=$1
+	local perms=$2
+	local capset=$3
+	local path=$4
+	local res
+
+	chmod $perms $path && \
+	chown $uid_gid $path
+	res=$?
+
+	use caps || return $res
+
+	#set the capability
+	setcap "$capset=ep" "$path" &> /dev/null
+	#check if the capabilitiy got set correctly
+	setcap -v "$capset=ep" "$path" &> /dev/null
+	res=$?
+
+	if [ $res -ne 0 ]; then
+		ewarn "Failed to set capabilities. Probable reason is missed kernel support."
+		ewarn "Kernel must have SECURITY_FILE_CAPABILITIES, and <FS>_FS_SECURITY"
+		ewarn "enabled (e.g. EXT3_FS_SECURITY) where <FS> is the filesystem to store"
+		ewarn "${path}"
+		ewarn
+		ewarn "Falling back to suid now..."
+		chmod u+s ${path}
+	fi
+	return $res
+}
 
 pkg_setup() {
 	if ! use gtk; then
@@ -65,24 +102,13 @@ pkg_setup() {
 	enewgroup wireshark
 }
 
-src_prepare() {
-	cd "${S}"/epan # old hardened toolchain bug...
-	epatch "${FILESDIR}/wireshark-except-double-free.diff"
-}
-
 src_configure() {
 	local myconf
 
-	# optimization bug, see bug #165340, bug #40660
-	if [[ $(gcc-version) == 3.4 ]] ; then
-		elog "Found gcc 3.4, forcing -O3 into CFLAGS"
-		replace-flags -O? -O3
-		# see bug #133092; bugs.wireshark.org/bugzilla/show_bug.cgi?id=1001
-		# our old hardened toolchain bug
-		filter-flags -fstack-protector
-	elif [[ $(gcc-version) == 3.3 || $(gcc-version) == 3.2 ]] ; then
-		elog "Found <=gcc-3.3, forcing -O into CFLAGS"
-		replace-flags -O? -O
+	if [[ $(gcc-major-version) -lt 3 ||
+		( $(gcc-major-version) -eq 3 &&
+			$(gcc-minor-version) -le 4 ) ]] ; then
+		die "Unsupported compiler version, please upgrade."
 	fi
 
 	if use ares && use adns; then
@@ -96,6 +122,7 @@ src_configure() {
 	# profile and pie are incompatible #215806, #292991
 	if use profile; then
 		ewarn "You've enabled the 'profile' USE flag, building PIE binaries is disabled."
+		ewarn "Also ignore \"unrecognized option '-nopie'\" gcc warning #358101."
 		append-flags $(test-flags-CC -nopie)
 	fi
 
@@ -133,8 +160,8 @@ src_configure() {
 		$(use_with portaudio) \
 		$(use_with python) \
 		$(use_with caps libcap) \
-		$(use_enable caps setcap-install) \
-		$(use caps || use_enable pcap setuid-install) \
+		$(use pcap && use_enable caps setcap-install) \
+		$(use pcap && use_enable !caps setuid-install) \
 		--sysconfdir=/etc/wireshark \
 		--with-dumpcap-group=wireshark \
 		--disable-extra-gcc-checks \
@@ -166,9 +193,6 @@ src_install() {
 	insinto /usr/include/wiretap
 	doins wiretap/wtap.h || die
 
-	use caps && local perms=550 || local perms=6550
-	use pcap && fperms ${perms} /usr/bin/dumpcap
-
 	if use gtk; then
 		for c in hi lo; do
 			for d in 16 32 48; do
@@ -176,16 +200,18 @@ src_install() {
 				newins image/${c}${d}-app-wireshark.png wireshark.png
 			done
 		done
-		insinto /usr/share/applications
-		doins wireshark.desktop || die
+		domenu wireshark.desktop || die
 	fi
+	chmod o-x "${ED}"/usr/bin/dumpcap #357237
 }
 
 pkg_postinst() {
-	use caps && setcap cap_net_raw,cap_net_admin+eip "${ROOT}"/usr/bin/dumpcap
+	if use caps && use pcap; then
+		fcaps 0:wireshark 550 cap_net_raw,cap_net_admin "${ROOT}"/usr/bin/dumpcap
+	fi
 	echo
-	ewarn "NOTE: To run wireshark as normal user you have to add yourself into"
-	ewarn "wireshark group. This security measure ensures that only trusted"
-	ewarn "users allowed to sniff your traffic."
+	ewarn "NOTE: To run wireshark as normal user you have to add yourself to"
+	ewarn "the wireshark group. This security measure ensures that only trusted"
+	ewarn "users are allowed to sniff your traffic."
 	echo
 }

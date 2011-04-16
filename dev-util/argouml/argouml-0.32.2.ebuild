@@ -10,11 +10,7 @@ DESCRIPTION="modelling tool that helps you do your design using UML"
 HOMEPAGE="http://argouml.tigris.org"
 BASE_URI="http://argouml-downloads.tigris.org/nonav/${P}"
 SRC_URI="${BASE_URI}/ArgoUML-${PV}.tar.gz
-	http://argouml-downloads.tigris.org/nonav/argouml-db-1.0/dbuml-module-1.0.4.zip
-	doc? (
-		${BASE_URI}/manual-${PV}.pdf
-		${BASE_URI}/quickguide-${PV}.pdf
-	)"
+	http://argouml-downloads.tigris.org/nonav/argouml-db-1.0/dbuml-module-1.0.4.zip"
 
 LICENSE="BSD"
 SLOT="0"
@@ -38,13 +34,6 @@ src_install() {
 	java-pkg_dolauncher ${PN} --main org.argouml.application.Main
 
 	dodoc ${P}/README.txt || die
-
-	if use doc ; then
-		dohtml -r release/{Readme.htm,www}
-		insinto /usr/share/doc/${P}
-		doins "${DISTDIR}/manual-${PV}.pdf"
-		doins "${DISTDIR}/quickguide-${PV}.pdf"
-	fi
 
 	doicon "${FILESDIR}"/${PN}.png || die
 	make_desktop_entry ${PN} "ArgoUML" ${PN} "Graphics"
