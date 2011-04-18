@@ -47,6 +47,3 @@ pkg_setup() {
 	DOCS="AUTHORS NEWS README TODO"
 }
 
-src_prepare() {
-	gnome2_src_prepare
-}
