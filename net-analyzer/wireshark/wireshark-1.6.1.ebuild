@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-analyzer/wireshark/wireshark-1.4.4.ebuild,v 1.7 2011/03/13 11:23:51 xarthisius Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-analyzer/wireshark/wireshark-1.6.0_rc1.ebuild,v 1.1 2011/05/24 10:44:24 pva Exp $
 
 EAPI="3"
 PYTHON_DEPEND="python? 2"
@@ -13,11 +13,11 @@ SRC_URI="http://www.wireshark.org/download/src/all-versions/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="alpha amd64 hppa ia64 ppc ppc64 sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="adns ares doc doc-pdf gtk ipv6 lua gcrypt geoip kerberos
-profile +pcap pcre portaudio python +caps selinux smi ssl threads zlib"
+profile +pcap portaudio python +caps selinux smi ssl threads zlib"
 
-RDEPEND=">=dev-libs/glib-2.14.0:2
+RDEPEND=">=dev-libs/glib-2.14:2
 	zlib? ( sys-libs/zlib
 		!=sys-libs/zlib-1.2.4 )
 	smi? ( net-libs/libsmi )
@@ -28,7 +28,6 @@ RDEPEND=">=dev-libs/glib-2.14.0:2
 	ssl? ( net-libs/gnutls )
 	gcrypt? ( dev-libs/libgcrypt )
 	pcap? ( net-libs/libpcap )
-	pcre? ( dev-libs/libpcre )
 	caps? ( sys-libs/libcap )
 	kerberos? ( virtual/krb5 )
 	portaudio? ( media-libs/portaudio )
@@ -153,17 +152,16 @@ src_configure() {
 		$(use_with lua) \
 		$(use_with kerberos krb5) \
 		$(use_with smi libsmi) \
-		$(use_with pcap) \
 		$(use_with zlib) \
-		$(use_with pcre) \
 		$(use_with geoip) \
 		$(use_with portaudio) \
 		$(use_with python) \
 		$(use_with caps libcap) \
+		$(use_with pcap) \
+		$(use_with pcap dumpcap-group wireshark) \
 		$(use pcap && use_enable caps setcap-install) \
 		$(use pcap && use_enable !caps setuid-install) \
 		--sysconfdir=/etc/wireshark \
-		--with-dumpcap-group=wireshark \
 		--disable-extra-gcc-checks \
 		${myconf}
 }
@@ -177,9 +175,6 @@ src_install() {
 	emake DESTDIR="${D}" install || die "emake install failed"
 	if use doc; then
 		dohtml -r docbook/{release-notes.html,ws{d,u}g_html{,_chunked}}
-#		for dir in ws{d,u}g_html{,_chunked}; do
-#			dohtml -p ${dir} -r docbook/${dir}/ || die
-#		done
 		if use doc-pdf; then
 			insinto /usr/share/doc/${PF}/pdf/
 			doins docbook/{{developer,user}-guide,release-notes}-{a4,us}.pdf || die
