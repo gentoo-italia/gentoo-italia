@@ -1,12 +1,13 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/net-p2p/mldonkey/mldonkey-3.0.7.ebuild,v 1.1 2011/05/07 18:23:24 armin76 Exp $
 
 EAPI="2"
 WANT_AUTOCONF=2.5
 
 inherit flag-o-matic eutils autotools toolchain-funcs
 
-IUSE="doc fasttrack gd gnutella gtk guionly magic +ocamlopt"
+IUSE="bittorrent doc fasttrack gd gnutella gtk guionly magic +ocamlopt"
 
 DESCRIPTION="MLDonkey is a multi-network P2P application written in Ocaml, coming with its own Gtk GUI, web and telnet interface."
 HOMEPAGE="http://mldonkey.sourceforge.net/"
@@ -25,8 +26,7 @@ RDEPEND="dev-lang/perl
 	magic? ( sys-apps/file )"
 
 DEPEND="${RDEPEND}
-	>=dev-lang/ocaml-3.10.2[ocamlopt?]
-	sys-apps/sed"
+	>=dev-lang/ocaml-3.10.2[ocamlopt?]"
 
 MLUSER="p2p"
 
@@ -81,12 +81,13 @@ src_configure() {
 		--localstatedir=/var/mldonkey \
 		--enable-checks \
 		--disable-batch \
+		$(use_enable bittorrent) \
 		$(use_enable fasttrack) \
 		$(use_enable gnutella) \
 		$(use_enable gnutella gnutella2) \
 		$(use_enable gd) \
 		$(use_enable magic) \
-		${myconf} || die "econf failed"
+		${myconf}
 }
 
 src_compile() {
@@ -103,9 +104,10 @@ src_install() {
 	use ocamlopt || myext=".byte"
 	use ocamlopt || export STRIP_MASK="*/bin/*"
 	if ! use guionly; then
-		for i in mlnet mld_hash get_range copysources make_torrent subconv; do
+		for i in mlnet mld_hash get_range copysources subconv; do
 			newbin $i$myext $i || die "failed to install $i"
 		done
+		use bittorrent && newbin make_torrent$myext make_torrent
 
 		newconfd "${FILESDIR}/mldonkey.confd-2.8" mldonkey
 		fperms 600 /etc/conf.d/mldonkey
