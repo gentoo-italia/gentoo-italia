@@ -40,7 +40,7 @@ RDEPEND="${COMMON_DEPEND}
 DEPEND="${COMMON_DEPEND}
 	dev-util/pkgconfig"
 
-PATCHES=( "${FILESDIR}/${P}-hunspell.patch" )
+#PATCHES=( "${FILESDIR}/${P}-hunspell.patch" )
 
 src_install() {
 	emake INSTALL_ROOT="${D}" install || die "make install failed"
