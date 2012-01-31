@@ -1,43 +1,25 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
-EAPI=3
-PYTHON_DEPEND="2"
+EAPI="2"
+
+PYTHON_DEPEND="2:2.5"
 
 inherit eutils python distutils
 
-DESCRIPTION="This tool provides a demonstration of the HTTPS stripping attacks."
-HOMEPAGE="http://thoughtcrime.org/software/sslstrip/"
-SRC_URI="http://thoughtcrime.org/software/sslstrip/sslstrip-${PV}.tar.gz"
+DESCRIPTION="sslstrip provides a demonstration of a HTTPS stripping attack"
+HOMEPAGE="http://www.thoughtcrime.org/software/sslstrip/"
+SRC_URI="http://www.thoughtcrime.org/software/sslstrip/${P}.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND=">=dev-lang/python-2.7
-         >=dev-python/twisted-web-10.2.0"
-RDEPEND="${DEPEND}"
+DEPEND=""
+RDEPEND="dev-python/twisted-web"
 
 src_prepare() {
 	epatch "${FILESDIR}/sslstrip_custom.patch"
-}
-
-src_install() {
-    dodir /usr/lib/"${PN}"
-	insinto /usr/lib/"${PN}"
-    doins sslstrip.py lock.ico
-    dodir /usr/lib/${PN}/sslstrip
-    insinto /usr/lib/${PN}/sslstrip
-    doins sslstrip/*.py
-    dosbin "${FILESDIR}/sslstrip"
-    dodoc README
-}
-
-pkg_postinst() {
-    python_mod_optimize
-}
-
-pkg_postrm() {
-    python_mod_cleanup
 }
