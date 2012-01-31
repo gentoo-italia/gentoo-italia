@@ -1,6 +1,6 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-analyzer/wireshark/wireshark-1.6.0_rc1.ebuild,v 1.1 2011/05/24 10:44:24 pva Exp $
+# $Header: /var/cvsroot/gentoo-x86/net-analyzer/wireshark/wireshark-1.6.4.ebuild,v 1.8 2012/01/06 18:52:52 armin76 Exp $
 
 EAPI="3"
 PYTHON_DEPEND="python? 2"
@@ -13,7 +13,7 @@ SRC_URI="http://www.wireshark.org/download/src/all-versions/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="alpha amd64 hppa ia64 ppc ppc64 sparc x86 ~x86-fbsd"
 IUSE="adns ares doc doc-pdf gtk ipv6 lua gcrypt geoip kerberos
 profile +pcap portaudio python +caps selinux smi ssl threads zlib"
 
@@ -46,7 +46,8 @@ DEPEND="${RDEPEND}
 	dev-lang/perl
 	sys-devel/bison
 	sys-apps/sed
-	sys-devel/flex"
+	sys-devel/flex
+	!!<net-analyzer/wireshark-1.6.0_rc1"
 
 S=${WORKDIR}/${MY_P}
 
@@ -78,9 +79,9 @@ fcaps() {
 
 	if [ $res -ne 0 ]; then
 		ewarn "Failed to set capabilities. Probable reason is missed kernel support."
-		ewarn "Kernel must have SECURITY_FILE_CAPABILITIES, and <FS>_FS_SECURITY"
-		ewarn "enabled (e.g. EXT3_FS_SECURITY) where <FS> is the filesystem to store"
-		ewarn "${path}"
+		ewarn "Kernel must have <FS>_FS_SECURITY enabled where <FS> is the filesystem"
+		ewarn "to store ${path} (e.g. EXT3_FS_SECURITY). For kernels version before"
+		ewarn "2.6.33_rc1 SECURITY_FILE_CAPABILITIES must be enabled as well."
 		ewarn
 		ewarn "Falling back to suid now..."
 		chmod u+s ${path}
@@ -99,6 +100,11 @@ pkg_setup() {
 	fi
 	# Add group for users allowed to sniff.
 	enewgroup wireshark
+}
+
+src_prepare() {
+	epatch "${FILESDIR}/${P}-build.patch"
+	epatch "${FILESDIR}/${P}-doc-build.patch"
 }
 
 src_configure() {
@@ -161,7 +167,7 @@ src_configure() {
 		$(use_with pcap dumpcap-group wireshark) \
 		$(use pcap && use_enable caps setcap-install) \
 		$(use pcap && use_enable !caps setuid-install) \
-		--sysconfdir=/etc/wireshark \
+		--sysconfdir="${EPREFIX}"/etc/wireshark \
 		--disable-extra-gcc-checks \
 		${myconf}
 }
@@ -197,12 +203,12 @@ src_install() {
 		done
 		domenu wireshark.desktop || die
 	fi
-	chmod o-x "${ED}"/usr/bin/dumpcap #357237
+	use pcap && chmod o-x "${ED}"/usr/bin/dumpcap #357237
 }
 
 pkg_postinst() {
 	if use caps && use pcap; then
-		fcaps 0:wireshark 550 cap_net_raw,cap_net_admin "${ROOT}"/usr/bin/dumpcap
+		fcaps 0:wireshark 550 cap_net_raw,cap_net_admin "${EROOT}"/usr/bin/dumpcap
 	fi
 	echo
 	ewarn "NOTE: To run wireshark as normal user you have to add yourself to"

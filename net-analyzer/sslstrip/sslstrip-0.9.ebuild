@@ -1,6 +1,5 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=3
 PYTHON_DEPEND="2"
@@ -16,12 +15,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND=">=dev-lang/python-2.5
-         >=dev-python/twisted-web-8.1.0"
+RDEPEND=">=dev-lang/python-2.7
+         >=dev-python/twisted-web-10.2.0"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}_custom.patch"
+	epatch "${FILESDIR}/sslstrip_custom.patch"
 }
 
 src_install() {

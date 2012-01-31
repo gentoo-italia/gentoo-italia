@@ -1,3 +1,1 @@
-=media-gfx/gimp-2.7.2
-=net-im/emesene-9999
-=dev-ruby/rcairo-1.10.0*
+=net-analyzer/wireshark-1.7.0
