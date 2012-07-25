@@ -100,7 +100,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-underlinking.patch
 	eautoreconf
 }
 
