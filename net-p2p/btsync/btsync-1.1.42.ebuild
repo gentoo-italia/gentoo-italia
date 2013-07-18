@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit pax-utils
+inherit pax-utils user
 
 DESCRIPTION="Sync stuff via BitTorrent"
 HOMEPAGE="http://labs.bittorrent.com/experiments/sync.html"
@@ -25,8 +25,15 @@ S="${WORKDIR}"
 
 QA_PREBUILT="usr/bin/btsync"
 
+pkg_setup() {
+    enewgroup btsync
+    enewuser  btsync -1 -1 -1 "btsync"
+}
+
 src_install() {
 	dodoc LICENSE.TXT
+
+
 
 	insinto /etc
 	doins "${FILESDIR}/btsync.conf"
