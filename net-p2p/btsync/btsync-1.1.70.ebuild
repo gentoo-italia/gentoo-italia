@@ -33,8 +33,6 @@ pkg_setup() {
 src_install() {
 	dodoc LICENSE.TXT
 
-
-
 	insinto /etc
 	doins "${FILESDIR}/btsync.conf"
 
