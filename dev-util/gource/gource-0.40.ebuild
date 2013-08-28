@@ -24,7 +24,7 @@ RDEPEND="
 	>=media-libs/libpng-1.2
 	>=media-libs/libsdl-1.2.10[video,opengl,X]
 	>=media-libs/sdl-image-1.2[jpeg,png]
-	<=media-libs/sdl-image-1.2.999
+	media-libs/sdl-image:0
 	dev-libs/libpcre:3
 	dev-libs/tinyxml
 	media-fonts/freefont
