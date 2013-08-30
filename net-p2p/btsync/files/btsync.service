@@ -4,11 +4,11 @@ After=network.target
 
 [Service]
 Type=forking
-User=btsync
+User=youruser
 Group=btsync
 ExecStart=/usr/bin/btsync --config /etc/btsync.conf
 Restart=on-abort
-PIDFile=/run/btsync.pid
+# PIDFile=/run/btsync.pid
 
 [Install]
 WantedBy=multi-user.target
