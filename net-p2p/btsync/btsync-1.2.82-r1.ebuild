@@ -37,7 +37,7 @@ src_install() {
 	doins "${FILESDIR}/btsync.conf"
 
     insinto /usr/lib/systemd/system
-    doins "${FILESDIR}/btsync.service"
+    doins "${FILESDIR}/btsync@.service"
 
 	mkdir -p "${D}/usr/bin"
 	cp btsync "${D}/usr/bin/btsync"
