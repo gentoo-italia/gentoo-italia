@@ -23,7 +23,6 @@ RDEPEND="
 			dev-python/pygobject:3[${PYTHON_USEDEP}]
 			dev-python/pygobject:2[${PYTHON_USEDEP}] )
 		sys-auth/polkit )
-	gtk? ( dev-python/pygtk:2[${PYTHON_USEDEP}] )
 "
 DEPEND=""
 
