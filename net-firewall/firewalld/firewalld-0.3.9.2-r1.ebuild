@@ -2,8 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
-PYTHON_COMPAT=( python{2_6,2_7} )
-#BACKPORTS=190680ba
+PYTHON_COMPAT=( python{3_2,3_3} )
+PYTHON_DEPEND="3"
+SUPPORT_PYTHON_ABIS="1"
+RESTRICT_PYTHON_ABIS="3.*"
+
 
 inherit autotools eutils gnome2-utils python-r1 systemd multilib
 
@@ -46,10 +49,7 @@ src_prepare() {
 
 src_configure() {
 	python_export_best
-
-	econf \
-		--enable-systemd
-		"$(systemd_with_unitdir 'systemd-unitdir')"
+	econf
 }
 
 src_install() {
