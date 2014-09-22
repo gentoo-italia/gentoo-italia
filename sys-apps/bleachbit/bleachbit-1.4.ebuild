@@ -1,5 +1,6 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/bleachbit/bleachbit-1.2.ebuild,v 1.1 2014/09/07 10:29:04 dev-zero Exp $
 
 EAPI=5
 
@@ -16,10 +17,10 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="amd64 x86"
-IUSE="nls"
+KEYWORDS="~amd64 ~x86"
+IUSE="+gtk nls"
 
-RDEPEND="dev-python/pygtk:2[$PYTHON_USEDEP]"
+RDEPEND="gtk? ( dev-python/pygtk:2[$PYTHON_USEDEP] )"
 DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )"
 
