@@ -1,8 +1,10 @@
 app-misc
 dev-util
+dev-libs
 net-analyzer
 net-p2p
 sci-electronics
 sys-devel
 www-apache
 dev-games
+x11-terms
