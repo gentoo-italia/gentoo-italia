@@ -1,0 +1,7 @@
+=app-emulation/libvirt-1.2.9
+=app-emulation/libvirt-glib-0.1.9
+=x11-libs/gtk+-3.14.0
+=x11-libs/gtksourceview-3.14.0
+=dev-libs/glib-2.42.0
+=dev-libs/gobject-introspection-1.42.0
+=dev-libs/gobject-introspection-common-1.42.0
