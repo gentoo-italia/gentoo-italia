@@ -24,7 +24,7 @@ src_compile() {
 	./waf-light --make-waf
 
 	# make waf put the cache into /tmp/
-	epatch "${FILESDIR}"/${PV}-cache-in-tmp.patch
+	#epatch "${FILESDIR}"/${PV}-cache-in-tmp.patch
 }
 
 src_install() {

@@ -1,6 +1,6 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/x11-terms/gnome-terminal/gnome-terminal-3.14.2-r2.ebuild,v 1.1 2015/01/26 17:47:05 pacho Exp $
 
 EAPI="5"
 GCONF_DEBUG="no"
@@ -18,11 +18,10 @@ KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~x86-fbsd ~
 
 # FIXME: automagic dependency on gtk+[X]
 RDEPEND="
-	>=dev-libs/glib-2.40:2
+	>=dev-libs/glib-2.40:2[dbus]
 	>=x11-libs/gtk+-3.10:3[X]
 	>=x11-libs/vte-0.38:2.91
 	>=gnome-base/dconf-0.14
-	>=gnome-base/gconf-2.31.3
 	>=gnome-base/gsettings-desktop-schemas-0.1.0
 	sys-apps/util-linux
 	x11-libs/libSM
@@ -34,6 +33,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	app-text/yelp-tools
 	dev-util/appdata-tools
+	dev-util/gdbus-codegen
 	|| ( dev-util/gtk-builder-convert <=x11-libs/gtk+-2.24.10:2 )
 	>=dev-util/intltool-0.50
 	sys-devel/gettext
@@ -45,15 +45,21 @@ DOC_CONTENTS="To get previous working directory inherited in new opened
 	. /etc/profile.d/vte.sh"
 
 src_prepare() {
+	# client: Hide obsolete --title option (from '3.14')
+	epatch "${FILESDIR}/${P}-title-option.patch"
+
+	# screen: Fix crash with empty child process command line (from '3.14')
+	epatch "${FILESDIR}/${P}-fix-crash.patch"
+
 	epatch "${FILESDIR}/restore-transparency.patch"
-	eautoreconf
+
 	gnome2_src_prepare
 }
 
 src_configure() {
 	gnome2_src_configure \
 		--disable-static \
-		--enable-migration \
+		--disable-migration \
 		$(use_enable debug) \
 		$(use_enable gnome-shell search-provider) \
 		$(use_with nautilus nautilus-extension) \
