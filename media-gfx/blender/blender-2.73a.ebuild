@@ -124,8 +124,7 @@ pkg_setup() {
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-2.68-doxyfile.patch \
 		"${FILESDIR}"/${PN}-2.68-fix-install-rules.patch \
-		"${FILESDIR}"/${PN}-2.70-sse2.patch \
-		"${FILESDIR}"/${PN}-2.72-T42797.diff
+		"${FILESDIR}"/${PN}-2.70-sse2.patch
 
 	epatch_user
 
