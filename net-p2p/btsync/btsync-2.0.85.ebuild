@@ -8,10 +8,10 @@ inherit pax-utils user
 
 DESCRIPTION="Sync stuff via BitTorrent"
 HOMEPAGE="http://labs.bittorrent.com/experiments/sync.html"
-SRC_URI="amd64? ( http://syncapp.bittorrent.com/${PV}/${PN}_x64-${PV}.tar.gz )
-	x86? ( http://syncapp.bittorrent.com/${PV}/${PN}_i386-${PV}.tar.gz )
-	ppc? ( http://syncapp.bittorrent.com/${PV}/${PN}_powerpc-${PV}.tar.gz )
-	arm? ( http://syncapp.bittorrent.com/${PV}/${PN}_arm-${PV}.tar.gz )"
+SRC_URI="amd64? ( https://download-cdn.getsyncapp.com/${PV}/linux-x64/BitTorrent-Sync_x64.tar.gz )
+	x86? ( https://download-cdn.getsyncapp.com/${PV}/linux-i386/BitTorrent-Sync_i386.tar.gz )
+	ppc? ( https://download-cdn.getsyncapp.com/${PV}/linux-powerpc/BitTorrent-Sync_powerpc.tar.gz )
+	arm? ( https://download-cdn.getsyncapp.com/${PV}/linux-arm/BitTorrent-Sync_arm.tar.gz )"
 
 LICENSE="BitTorrent"
 SLOT="0"
