@@ -25,8 +25,7 @@ src_install() {
     insinto /usr/lib/systemd/system
 
 	MY_ARCH=${ARCH}
-	# i386 -> 386
-	[ ${ARCH:0:1} == "i" ] && MY_ARCH=${ARCH:1}
+	[ ${ARCH} == "x86" ] && MY_ARCH="386"
 
 	doins "${S}/syncthing-linux-${MY_ARCH}-v${PV}/etc/linux-systemd/system/syncthing@.service"
 
