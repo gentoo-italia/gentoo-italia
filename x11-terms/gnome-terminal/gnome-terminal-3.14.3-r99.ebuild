@@ -1,6 +1,5 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-terms/gnome-terminal/gnome-terminal-3.14.2-r2.ebuild,v 1.1 2015/01/26 17:47:05 pacho Exp $
 
 EAPI="5"
 GCONF_DEBUG="no"
@@ -34,7 +33,7 @@ DEPEND="${RDEPEND}
 	app-text/yelp-tools
 	dev-util/appdata-tools
 	dev-util/gdbus-codegen
-	|| ( dev-util/gtk-builder-convert <=x11-libs/gtk+-2.24.10:2 )
+	dev-util/gtk-builder-convert
 	>=dev-util/intltool-0.50
 	sys-devel/gettext
 	virtual/pkgconfig
@@ -44,16 +43,10 @@ DOC_CONTENTS="To get previous working directory inherited in new opened
 	tab you will need to add the following line to your ~/.bashrc:\n
 	. /etc/profile.d/vte.sh"
 
+
 src_prepare() {
-	# client: Hide obsolete --title option (from '3.14')
-	epatch "${FILESDIR}/${P}-title-option.patch"
-
-	# screen: Fix crash with empty child process command line (from '3.14')
-	epatch "${FILESDIR}/${P}-fix-crash.patch"
-
-	epatch "${FILESDIR}/restore-transparency.patch"
-
-	gnome2_src_prepare
+    epatch "${FILESDIR}/restore-transparency.patch"
+    gnome2_src_prepare
 }
 
 src_configure() {
