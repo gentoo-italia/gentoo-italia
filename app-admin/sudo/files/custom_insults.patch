@@ -1,0 +1,58 @@
+--- plugins/sudoers/auth/sudo_auth.c	2015-03-18 18:05:50.000000000 +0100
++++ plugins/sudoers/auth/sudo_auth.c	2015-04-03 19:36:56.011170161 +0200
+@@ -95,6 +95,12 @@
+ 
+ static int standalone;
+ 
++#ifdef INSULT
++FILE *f_insult = NULL;
++char  c_insult[255] = "";
++int   i_line = 0;
++#endif
++
+ /*
+  * Initialize sudoers authentication method(s).
+  * Returns 0 on success and -1 on error.
+@@ -196,8 +202,40 @@
+     debug_decl(pass_warn, SUDOERS_DEBUG_AUTH)
+ 
+ #ifdef INSULT
+-    if (def_insults)
+-	warning = INSULT;
++    if (def_insults) {
++        f_insult = fopen("/etc/insults", "r+");
++        if (f_insult = NULL) {
++            warning = INSULT;
++        }
++        else {
++            int i;
++            i_line = 0;
++            while (!feof(f_insult)) {
++                if (fgetc(f_insult) == '\n') i_line++;
++            }
++            
++            if (i_line > 0) {
++                rewind (f_insult);
++                srand (time(NULL)); 
++                i_line = rand() % i_line+1;
++                i=1;
++                while (!feof(f_insult)) {
++                    if(fgets(c_insult, 255, f_insult) == NULL)
++                        break;
++
++                    if(i_line==i) {
++                         warning = c_insult; 
++                         break;
++                    }
++                    i++;
++                }
++            }
++            else {
++                warning = INSULT; 
++            }
++            fclose(f_insult);
++        }
++    }
+ #endif
+     sudo_printf(SUDO_CONV_ERROR_MSG, "%s\n", warning);
+ 
