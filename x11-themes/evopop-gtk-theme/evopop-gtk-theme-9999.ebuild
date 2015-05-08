@@ -3,7 +3,7 @@
 
 EAPI=5
 
-DESCRIPTION="Evopop gtk theme"
+DESCRIPTION="A simple, flat and bold Gtk theme for Solus OS & Budgie Desktop. Iris Dark was used as base."
 HOMEPAGE="https://github.com/solus-project/${PN}"
 
 if [[ ${PV} == "9999" ]] ; then
@@ -21,7 +21,7 @@ LICENSE="GPL-3.0"
 SLOT="0"
 
 RDEPEND="
-	x11-libs/gtk+:3
+	>=x11-libs/gtk+-3.14
 "
 DEPEND="${RDEPEND}"
 
