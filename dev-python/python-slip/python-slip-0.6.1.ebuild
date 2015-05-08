@@ -27,7 +27,7 @@ RDEPEND="
 DEPEND=""
 
 python_prepare_all() {
-	use selinux || epatch "${FILESDIR}/${PN}-0.6.0-no-selinux.patch"
+	use selinux || epatch "${FILESDIR}/${PN}-${PV}-no-selinux.patch"
 	sed -e "s:@VERSION@:${PV}:" setup.py.in > setup.py || die "sed failed"
 
 	if ! use dbus; then
