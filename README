@@ -7,7 +7,7 @@ Setting up layman
 Edit /etc/layman/layman.cfg:
 ----------------------------------------------------------------------
 overlays  : http://www.gentoo.org/proj/en/overlays/layman-global.txt
-            http://shadescoding.altervista.org/viralex.git/list.xml
+            https://raw.githubusercontent.com/viralex/viralex-overlay/master/list.xml
 
 and add the overlay using layman.
 	layman -f
