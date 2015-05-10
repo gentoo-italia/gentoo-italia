@@ -21,7 +21,7 @@ LICENSE="GPL-3.0"
 SLOT="0"
 
 RDEPEND="
-	>=x11-libs/gtk+-3.14
+	>=x11-libs/gtk+-3.16
 "
 DEPEND="${RDEPEND}"
 
