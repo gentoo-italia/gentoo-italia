@@ -1,6 +1,6 @@
 <layman>
-<overlay type="git" src="git://gitorious.org/viralex-overlay/viralex.git" contact="alessandro.rosetti@gmail.com" name="viralex">
- <link>http://gitorious.org/projects/viralex-overlay</link>
- <description>An overlay for Gentoo by Viralex</description>
+<overlay type="git" src="git://github.com/viralex/viralex-overlay.git" contact="alessandro.rosetti@gmail.com" name="viralex">
+ <link>https://github.com/viralex/viralex-overlay</link>
+ <description>personal gentoo overlay by viralex</description>
 </overlay>
 </layman>
