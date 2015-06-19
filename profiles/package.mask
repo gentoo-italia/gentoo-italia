@@ -1,1 +1,2 @@
 =net-misc/dropbox-3.2.6
+=media-gfx/blender-2.74
