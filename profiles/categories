@@ -4,6 +4,7 @@ dev-util
 dev-libs
 net-analyzer
 net-p2p
+net-libs
 net-misc
 sci-electronics
 sys-devel
