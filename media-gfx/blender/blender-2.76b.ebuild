@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-gfx/blender/blender-2.72b-r3.ebuild,v 1.1 2015/02/01 23:03:22 mgorny Exp $
+# $Id$
 
 ## BUNDLED-DEPS:
 # extern/cuew
@@ -27,7 +27,7 @@
 # extern/libmv/third_party/glog
 
 EAPI=5
-PYTHON_COMPAT=( python3_4 )
+PYTHON_COMPAT=( python3_5 )
 #PATCHSET="1"
 
 inherit multilib fdo-mime gnome2-utils cmake-utils eutils python-single-r1 versionator flag-o-matic toolchain-funcs pax-utils check-reqs
@@ -37,13 +37,13 @@ HOMEPAGE="http://www.blender.org"
 
 case ${PV} in
 	*_p*)
-		SRC_URI="http://dev.gentoo.org/~lu_zero/${P}.tar.gz" ;;
+		SRC_URI="https://dev.gentoo.org/~lu_zero/${P}.tar.gz" ;;
 	*)
 		SRC_URI="http://download.blender.org/source/${P}.tar.gz" ;;
 esac
 
 if [[ -n ${PATCHSET} ]]; then
-	SRC_URI+=" http://dev.gentoo.org/~flameeyes/${PN}/${P}-patches-${PATCHSET}.tar.xz"
+	SRC_URI+=" https://dev.gentoo.org/~flameeyes/${PN}/${P}-patches-${PATCHSET}.tar.xz"
 fi
 
 SLOT="0"

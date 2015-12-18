@@ -1,14 +1,17 @@
 README
 
-A Gentoo overlay by viralex (alessandro.rosetti@gmail.com)
+My personal Gentoo overlay (alessandro.rosetti@gmail.com)
 
-Setting up layman
+create "/etc/portage/repos.conf/viralex.conf"
+change location if needed.
+---------------------------------------------------
+[DEFAULT]
+main-repo = gentoo
 
-Edit /etc/layman/layman.cfg:
-----------------------------------------------------------------------
-overlays  : http://www.gentoo.org/proj/en/overlays/layman-global.txt
-            https://raw.githubusercontent.com/viralex/viralex-overlay/master/list.xml
-
-and add the overlay using layman.
-	layman -f
-	layman -a viralex
+[viralex]
+location = /var/lib/layman/viralex
+sync-type = git
+sync-uri = https://github.com/viralex/viralex-overlay
+auto-sync = yes
+sync-depth = 1
+---------------------------------------------------
