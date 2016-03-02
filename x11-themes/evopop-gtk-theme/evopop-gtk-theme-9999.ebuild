@@ -4,16 +4,16 @@
 EAPI=5
 
 DESCRIPTION="A simple, flat and bold Gtk theme for Solus OS & Budgie Desktop. Iris Dark was used as base."
-HOMEPAGE="https://github.com/solus-project/${PN}"
+HOMEPAGE="https://github.com/viralex/${PN}"
 
 if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 autotools
 	SRC_URI=""
-	EGIT_REPO_URI="https://github.com/solus-project/${PN}.git"
+	EGIT_REPO_URI="https://github.com/viralex/${PN}.git"
 	KEYWORDS=""
 else
 	inherit autotools
-	SRC_URI="https://github.com/solus-project/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/viralex/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~x86"
 fi
 
