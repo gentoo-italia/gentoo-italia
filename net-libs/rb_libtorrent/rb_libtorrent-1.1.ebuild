@@ -26,7 +26,7 @@ IUSE="debug +dht doc examples python +ssl static-libs test"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 RDEPEND="
-	>=dev-libs/boost-1.53:=[threads]
+	>=dev-libs/boost-1.61:=[threads]
 	sys-libs/zlib
 	virtual/libiconv
 	examples? ( !net-p2p/mldonkey )
