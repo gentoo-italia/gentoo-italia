@@ -1,53 +1,22 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-## BUNDLED-DEPS:
-# extern/cuew
-# extern/Eigen3
-# extern/xdnd
-# extern/carve
-# extern/glew
-# extern/libmv
-# extern/clew
-# extern/colamd
-# extern/lzma
-# extern/gtest
-# extern/rangetree
-# extern/libredcode
-# extern/wcwidth
-# extern/binreloc
-# extern/recastnavigation
-# extern/bullet2
-# extern/lzo
-# extern/libopenjpeg
-# extern/libmv/third_party/msinttypes
-# extern/libmv/third_party/ceres
-# extern/libmv/third_party/gflags
-# extern/libmv/third_party/glog
-
 EAPI=5
 PYTHON_COMPAT=( python3_5 )
-#PATCHSET="1"
-
 inherit multilib fdo-mime gnome2-utils cmake-utils eutils python-single-r1 versionator flag-o-matic toolchain-funcs pax-utils check-reqs
 
 DESCRIPTION="3D Creation/Animation/Publishing System"
 HOMEPAGE="http://www.blender.org"
 
-case ${PV} in
-	*_p*)
-		SRC_URI="https://dev.gentoo.org/~lu_zero/${P}.tar.gz" ;;
-	*)
-		SRC_URI="http://download.blender.org/source/${P}.tar.gz" ;;
-esac
+SRC_URI="http://download.blender.org/source/${P}.tar.gz"
 
 if [[ -n ${PATCHSET} ]]; then
 	SRC_URI+=" https://dev.gentoo.org/~flameeyes/${PN}/${P}-patches-${PATCHSET}.tar.xz"
 fi
 
-SLOT="0"
 LICENSE="|| ( GPL-2 BL )"
+SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+boost +bullet collada colorio cycles +dds debug doc +elbeem ffmpeg fftw +game-engine jack jpeg2k libav ndof nls openal openimageio +opennl openmp +openexr player redcode sdl sndfile cpu_flags_x86_sse cpu_flags_x86_sse2 tiff"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
@@ -97,13 +66,17 @@ RDEPEND="
 	openexr? ( media-libs/ilmbase media-libs/openexr )
 	sdl? ( media-libs/libsdl[sound,joystick] )
 	sndfile? ( media-libs/libsndfile )
-	tiff? ( media-libs/tiff:0 )"
-DEPEND="${RDEPEND}
+	tiff? ( media-libs/tiff:0 )
+"
+
+DEPEND="
+	${RDEPEND}
 	doc? (
 		app-doc/doxygen[-nodot(-),dot(+)]
 		dev-python/sphinx
 	)
-	nls? ( sys-devel/gettext )"
+	nls? ( sys-devel/gettext )
+"
 
 pkg_pretend() {
 	if use openmp && ! tc-has-openmp; then
@@ -124,7 +97,7 @@ pkg_setup() {
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-2.68-doxyfile.patch \
 		"${FILESDIR}"/${PN}-2.68-fix-install-rules.patch \
-		"${FILESDIR}"/${PN}-2.70-sse2.patch
+		"${FILESDIR}"/${PN}-2.77-sse2.patch
 
 	epatch_user
 
