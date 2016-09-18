@@ -8,10 +8,10 @@ change location if needed.
 [DEFAULT]
 main-repo = gentoo
 
-[viralex]
-location = /var/lib/layman/viralex
+[gentoo-italia]
+location = /var/lib/layman/gentoo-italia
 sync-type = git
-sync-uri = https://github.com/viralex/viralex-overlay
+sync-uri = https://github.com/viralex/gentoo-italia
 auto-sync = yes
 sync-depth = 1
 ---------------------------------------------------
