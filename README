@@ -1,6 +1,6 @@
 README
 
-My personal Gentoo overlay (alessandro.rosetti@gmail.com)
+Gentoo overlay from gentoo-italia (alessandro.rosetti@gmail.com)
 
 create "/etc/portage/repos.conf/viralex.conf"
 change location if needed.
