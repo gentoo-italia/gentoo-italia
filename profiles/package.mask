@@ -1,1 +1,2 @@
-=media-gfx/blender-2.75
+>=media-gfx/blender-2.77
+=net-libs/rb_libtorrent-1.1.1
