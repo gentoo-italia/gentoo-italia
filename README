@@ -2,16 +2,16 @@ README
 
 Gentoo overlay from gentoo-italia (alessandro.rosetti@gmail.com)
 
-create "/etc/portage/repos.conf/viralex.conf"
+create "/etc/portage/repos.conf/gentoo-italia.conf"
 change location if needed.
 ---------------------------------------------------
 [DEFAULT]
 main-repo = gentoo
 
 [gentoo-italia]
-location = /var/lib/layman/gentoo-italia
+location = /var/lib/repos/gentoo-italia
 sync-type = git
-sync-uri = https://github.com/viralex/gentoo-italia
+sync-uri = https://github.com/hexvar/gentoo-italia
 auto-sync = yes
 sync-depth = 1
 ---------------------------------------------------
