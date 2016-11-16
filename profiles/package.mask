@@ -1,2 +1,1 @@
 =net-libs/rb_libtorrent-1.1.1
-=x11-base/xorg-server-1.18.99.902
