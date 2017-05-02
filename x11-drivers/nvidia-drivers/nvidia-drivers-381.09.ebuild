@@ -5,7 +5,7 @@ EAPI=6
 inherit eutils flag-o-matic linux-info linux-mod multilib-minimal nvidia-driver \
 	portability toolchain-funcs unpacker user udev
 
-NV_URI="http://us.download.nvidia.com/XFree86/"
+NV_URI="http://http.download.nvidia.com/XFree86/"
 AMD64_NV_PACKAGE="NVIDIA-Linux-x86_64-${PV}"
 
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
@@ -13,7 +13,7 @@ HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
 SRC_URI="
 	amd64? ( ${NV_URI}Linux-x86_64/${PV}/${AMD64_NV_PACKAGE}.run )
 	tools? (
-		ftp://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-${PV}.tar.bz2
+		${NV_URI}nvidia-settings/nvidia-settings-${PV}.tar.bz2
 	)
 "
 
@@ -57,6 +57,7 @@ COMMON="
 DEPEND="
 	${COMMON}
 	kernel_linux? ( virtual/linux-sources )
+	tools? ( sys-apps/dbus )
 "
 RDEPEND="
 	${COMMON}
@@ -81,20 +82,6 @@ pkg_pretend() {
 		[ "${DEFAULT_ABI}" != "amd64" ]; then
 		eerror "This ebuild doesn't currently support changing your default ABI"
 		die "Unexpected \${DEFAULT_ABI} = ${DEFAULT_ABI}"
-	fi
-
-	if use kernel_linux && kernel_is ge 4 10; then
-		ewarn "Gentoo supports kernels which are supported by NVIDIA"
-		ewarn "which are limited to the following kernels:"
-		ewarn "<sys-kernel/gentoo-sources-4.10"
-		ewarn "<sys-kernel/vanilla-sources-4.10"
-		ewarn ""
-		ewarn "You are free to utilize epatch_user to provide whatever"
-		ewarn "support you feel is appropriate, but will not receive"
-		ewarn "support as a result of those changes."
-		ewarn ""
-		ewarn "Do not file a bug report about this."
-		ewarn ""
 	fi
 
 	# Since Nvidia ships many different series of drivers, we need to give the user
@@ -163,13 +150,15 @@ pkg_setup() {
 }
 
 src_prepare() {
-    eapply "${FILESDIR}"/${PN}-378.13-linux-4.10.patch
 	if use pax_kernel; then
 		ewarn "Using PAX patches is not supported. You will be asked to"
 		ewarn "use a standard kernel should you have issues. Should you"
 		ewarn "need support with these patches, contact the PaX team."
 		eapply "${FILESDIR}"/${PN}-375.20-pax.patch
 	fi
+
+	eapply "${FILESDIR}"/${PN}-381.09-v3.patch
+
 	# Allow user patches so they can support RC kernels and whatever else
 	eapply_user
 }
