@@ -1,2 +1,1 @@
-=net-libs/rb_libtorrent-1.1.1
-=x11-drivers/nvidia-drivers-375.20
+=sys-devel/gcc-7.1.0

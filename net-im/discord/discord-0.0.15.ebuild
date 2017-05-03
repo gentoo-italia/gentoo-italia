@@ -18,6 +18,7 @@ SLOT="0"
 LICENSE="hammer-and-chisel"
 RDEPEND=""
 DEPEND="${RDEPEND}
+	sys-libs/libcxx
 	dev-libs/expat
 	dev-libs/nss
 	gnome-base/gconf
