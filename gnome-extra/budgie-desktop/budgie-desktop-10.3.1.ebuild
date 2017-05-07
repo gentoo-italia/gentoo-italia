@@ -17,7 +17,7 @@ IUSE="bluetooth +introspection +polkit"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-COMMON_DEPEND=">=app-i18n/ibus-1.5.11
+COMMON_DEPEND=">=app-i18n/ibus-1.5.11[vala]
 	>=dev-libs/glib-2.46.0:2
 	dev-libs/gjs
 	>=dev-libs/libpeas-1.8.0:0
