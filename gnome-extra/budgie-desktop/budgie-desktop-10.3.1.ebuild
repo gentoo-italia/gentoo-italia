@@ -67,25 +67,24 @@ src_configure() {
 
 src_compile() {
 	cd "${S}/build"
-	emake
+	ninja
 }
 
 src_install() {
 	cd "${S}/build"
-	DESTDIR="${ED}" emake install
-
+	DESTDIR="${ED}" ninja install
 }
 
-pkg_preinst() {
-	gnome2_icon_savelist
-}
+#pkg_preinst() {
+#	gnome2_icon_savelist
+#}
 
-pkg_postinst() {
-	gnome2_gconf_install
-	gnome2_icon_cache_update
-}
+#pkg_postinst() {
+#	gnome2_gconf_install
+#	gnome2_icon_cache_update
+#}
 
-pkg_postrm() {
-	gnome2_gconf_uninstall
-	gnome2_icon_cache_update
-}
+#pkg_postrm() {
+#	gnome2_gconf_uninstall
+#	gnome2_icon_cache_update
+#}
