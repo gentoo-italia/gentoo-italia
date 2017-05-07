@@ -53,6 +53,7 @@ pkg_setup() {
 src_prepare() {
 	eapply_user
 	sed -i -e '/meson\.add_install_script/d' meson.build
+	sed -i -e 's/bdugie/budgie/g' docs/meson.build
 }
 
 src_configure() {
@@ -80,11 +81,11 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	gnome2_gconf_install
+	gnome2_dconf_install
 	gnome2_icon_cache_update
 }
 
 pkg_postrm() {
-	gnome2_gconf_uninstall
+	gnome2_dconf_uninstall
 	gnome2_icon_cache_update
 }
