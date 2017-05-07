@@ -81,11 +81,11 @@ pkg_preinst() {
 }
 
 pkg_postinst() {
-	gnome2_dconf_install
+	gnome2_gconf_install
 	gnome2_icon_cache_update
 }
 
 pkg_postrm() {
-	gnome2_dconf_uninstall
+	gnome2_gconf_uninstall
 	gnome2_icon_cache_update
 }
