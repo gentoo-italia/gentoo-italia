@@ -1,0 +1,21 @@
+diff -Naur libgtop_orig/sysdeps/linux/mem.c libgtop/sysdeps/linux/mem.c
+--- libgtop_orig/sysdeps/linux/mem.c	2017-05-11 09:42:50.229127000 +0200
++++ libgtop/sysdeps/linux/mem.c	2017-05-11 10:02:05.004410530 +0200
+@@ -60,12 +60,12 @@
+ 	buf->buffer = get_scaled(buffer, "Buffers:");
+ 	buf->cached = get_scaled(buffer, "Cached:") + get_scaled(buffer, "Slab:");
+ 
+-	if (server->os_version_code >= LINUX_VERSION_CODE(3, 14, 0)) {
+-		buf->user = buf->total - get_scaled(buffer, "MemAvailable:");
+-	}
+-	else {
++	//if (server->os_version_code >= LINUX_VERSION_CODE(3, 14, 0)) {
++	//	buf->user = buf->total - get_scaled(buffer, "MemAvailable:");
++	//}
++	//else {
+ 		buf->user = buf->total - buf->free - buf->cached - buf->buffer;
+-	}
++	//}
+ 
+ 	buf->flags = _glibtop_sysdeps_mem;
+ }
