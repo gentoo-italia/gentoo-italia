@@ -17,7 +17,7 @@ HOMEPAGE="https://github.com/snwh/${PN}"
 if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/snwh/${PN}.git"
-	KEYWORDS=""
+	KEYWORDS="~amd64"
 fi
 
 src_prepare() {
