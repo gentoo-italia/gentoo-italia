@@ -5,12 +5,13 @@ EAPI=6
 VALA_MIN_API_VERSION="0.34"
 PYTHON_COMPAT=( python3_{4,5,6} )
 
-inherit eutils fdo-mime git-r3 gnome2-utils meson multiprocessing ninja-utils vala python-single-r1
+inherit eutils fdo-mime gnome2-utils meson multiprocessing ninja-utils vala python-single-r1
 
 MY_AUTHOR="budgie-desktop"
 DESCRIPTION="Desktop Environment based on GNOME 3"
 HOMEPAGE="https://evolve-os.com/budgie/"
-EGIT_REPO_URI="https://github.com/${MY_AUTHOR}/${PN}.git"
+#EGIT_REPO_URI="https://github.com/${MY_AUTHOR}/${PN}.git"
+SRC_URI="https://github.com/${PN}/${PN}/releases/download/v${PV}/${P}.tar.xz"
 IUSE="+bluetooth +policykit +introspection pm-utils"
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
@@ -48,6 +49,8 @@ DEPEND="${PYTHON_DEPS}
 	dev-util/meson
 	dev-util/ninja
 "
+
+
 src_prepare() {
 	#epatch "${FILESDIR}/${PN}-remove_postinstall.patch"
 	mkdir ${S}/tmpbin
