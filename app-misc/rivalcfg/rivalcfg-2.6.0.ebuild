@@ -4,6 +4,8 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 
+inherit distutils-r1
+
 DESCRIPTION="Unofficial tool for configuring SteelSeries Rival gaming mices"
 HOMEPAGE="https://github.com/flozz/rivalcfg"
 SRC_URI="https://github.com/flozz/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
@@ -15,3 +17,5 @@ IUSE=""
 
 DEPEND=">=dev-python/pyudev-0.19.0"
 RDEPEND="${DEPEND}"
+
+
