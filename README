@@ -13,5 +13,5 @@ location = /var/lib/layman/gentoo-italia
 sync-type = git
 sync-uri = https://github.com/viralex/gentoo-italia
 auto-sync = yes
-sync-depth = 1
+clone-depth = 1
 ---------------------------------------------------
