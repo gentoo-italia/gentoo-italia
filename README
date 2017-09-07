@@ -2,9 +2,9 @@ README
 
 Gentoo overlay from gentoo-italia (alessandro.rosetti@gmail.com)
 
+1)
 create "/etc/portage/repos.conf/gentoo-italia.conf"
-change repo location if needed.
-clone repository to specified location.
+change repo location if needed (/var/lib/repos/).
 ---------------------------------------------------
 [DEFAULT]
 main-repo = gentoo
@@ -14,5 +14,12 @@ location = /var/lib/repos/gentoo-italia
 sync-type = git
 sync-uri = https://github.com/hexvar/gentoo-italia
 auto-sync = yes
-sync-depth = 1
+clone-depth = 1
 ---------------------------------------------------
+
+2)
+clone repository to the specified location.
+
+3)
+chown portage:portage -R /var/lib/repos/gentoo-italia
+
