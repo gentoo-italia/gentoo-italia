@@ -13,11 +13,11 @@ RDEPEND="${DEPEND}"
 
 DESCRIPTION="Paper icon theme"
 HOMEPAGE="https://github.com/snwh/${PN}"
+KEYWORDS="~amd64"
 
 if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/snwh/${PN}.git"
-	KEYWORDS="~amd64"
 fi
 
 src_prepare() {

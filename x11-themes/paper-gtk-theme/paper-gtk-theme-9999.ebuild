@@ -11,12 +11,11 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3
 	SRC_URI=""
 	EGIT_REPO_URI="https://github.com/snwh/${PN}.git"
-	KEYWORDS=""
 else
 	SRC_URI="https://github.com/snwh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~x86"
 fi
 
+KEYWORDS="~amd64 ~arm ~x86"
 LICENSE="GPL-3.0"
 SLOT="0"
 

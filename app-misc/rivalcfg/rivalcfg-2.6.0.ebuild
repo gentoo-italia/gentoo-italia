@@ -20,6 +20,5 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
 	default
-	pwd
 	sed -i -- 's|.rules", "\/etc\/udev\/rules.d|.rules", "${S}\/etc\/udev\/rules.d|g' setup.py
 }
