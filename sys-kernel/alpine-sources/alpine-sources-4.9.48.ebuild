@@ -23,6 +23,6 @@ src_prepare() {
 }
 pkg_postinst()
 {
-	ewarn "This is not an official ebuild, do not report problems in Gentoo Bugzilla."
-	ewarn "Report any problems on the GitHub repository https://github.com/hexec/gentoo-italia/issues"
+	elog "This is not an official ebuild, do not report problems in Gentoo Bugzilla."
+	elog "Report any problems on the GitHub repository https://github.com/hexec/gentoo-italia/issues"
 }
