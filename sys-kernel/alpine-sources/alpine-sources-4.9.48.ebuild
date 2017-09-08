@@ -13,11 +13,16 @@ HOMEPAGE="https://github.com/alpinelinux/aports/tree/master/main/linux-hardened"
 IUSE=""
 RDEPEND=">=sys-devel/gcc-4.5"
 
-SRC_URI="${KERNEL_URI} https://raw.githubusercontent.com/alpinelinux/aports/master/main/linux-hardened/test.patch"
+SRC_URI="${KERNEL_URI} https://dev.alpinelinux.org/~ncopa/grsec/hardened-3.1-${PV}-201704252333-alpine.patch"
 
 KEYWORDS="~amd64 ~x86"
 
 src_prepare() {
 	default
-	eapply "${DISTDIR}"/test.patch
+	eapply "${DISTDIR}"/*-alpine.patch
+}
+pkg_postinst()
+{
+	ewarn "This is not an official ebuild, do not report problems in Gentoo Bugzilla."
+	ewarn "Report any problems on the GitHub repository https://github.com/hexec/gentoo-italia/issues"
 }
