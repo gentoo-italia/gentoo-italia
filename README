@@ -1,11 +1,17 @@
 README
+
 Gruppo telegram di riferimento:
 https://t.me/gentooitalia
 
 Gentoo-italia overlay (alessandro.rosetti@gmail.com)
 
+Installazione:
 
-crea "/etc/portage/repos.conf/gentoo-italia.conf"
+Questo procedimento non richiede la presenza del tool layman.
+
+crea il seguente file:
+"/etc/portage/repos.conf/gentoo-italia.conf"
+
 cambia il path se necessario (/var/lib/overlays/).
 ---------------------------------------------------
 [DEFAULT]
@@ -19,3 +25,4 @@ auto-sync = yes
 clone-depth = 1
 ---------------------------------------------------
 
+fai un sync con emerge o eix.
