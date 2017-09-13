@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
+PYTHON_COMPAT=( python3_{4,5,6} )
 
 inherit distutils-r1
 
-DESCRIPTION="Unofficial tool for configuring SteelSeries Rival gaming mices"
+DESCRIPTION="Unofficial tool for configuring SteelSeries Rival gaming mouse"
 HOMEPAGE="https://github.com/flozz/rivalcfg"
 SRC_URI="https://github.com/flozz/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
@@ -20,5 +20,7 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
 	default
-	sed -i -- 's|.rules", "\/etc\/udev\/rules.d|.rules", "${S}\/etc\/udev\/rules.d|g' setup.py
+	sed -i -- 's|print("Installing udev rules...")|print("Installing udev rules...")\n        os.makedirs("'${D}'etc\/udev\/rules.d")|' setup.py
+	sed -i -- 's|.rules", "\/etc\/udev\/rules.d|.rules", "'${D}'etc\/udev\/rules.d|' setup.py
+	sed -i -- 's|subprocess.call(\["udevadm", "trigger"\])|pass|' setup.py
 }
