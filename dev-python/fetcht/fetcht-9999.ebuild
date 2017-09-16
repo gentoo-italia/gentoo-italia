@@ -24,7 +24,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
-RDEPEND=""
+RDEPEND="
+dev-python/beautifulsoup
+dev-python/prettytable
+"
 
 python_test() {
 	nosetests || die "tests failed under ${EPYTHON}"
