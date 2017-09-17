@@ -4,7 +4,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{3_4,3_5,3_6} )
+PYTHON_COMPAT=( python{3_5,3_6} )
 
 inherit distutils-r1
 
@@ -27,6 +27,7 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="
 dev-python/beautifulsoup
 dev-python/prettytable
+dev-python/urllib3
 "
 
 python_test() {
