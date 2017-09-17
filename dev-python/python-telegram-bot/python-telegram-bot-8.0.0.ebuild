@@ -16,8 +16,18 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND=""
+RDEPEND="
+dev-python/certifi[${PYTHON_USEDEP}]
+>=dev-python/future-0.16.0[${PYTHON_USEDEP}]
+"
 DEPEND="${RDEPEND}
-	dev-python/certifi[${PYTHON_USEDEP}]
-	>=dev-python/future-0.16.0[${PYTHON_USEDEP}]
-	dev-python/setuptools[${PYTHON_USEDEP}]"
+dev-python/setuptools[${PYTHON_USEDEP}]
+"
+
+python_prepare_all() {
+	local PATCHES=(
+		"${FILESDIR}"/${PN}-request.patch
+	)
+	rm -rf ${S}/telegram/vendor
+	distutils-r1_python_prepare_all
+}
