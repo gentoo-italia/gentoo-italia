@@ -16,7 +16,6 @@ KEYWORDS="~amd64 ~x86"
 CDEPEND=">=dev-libs/glib-2.44
 	>=x11-libs/gtk+-3.20:3"
 RDEPEND="${CDEPEND}
-	x11-themes/gnome-icon-theme-symbolic
 	>=media-video/mpv-0.21[libmpv]"
 DEPEND="${CDEPEND}
 	>=dev-util/meson-0.37.0
