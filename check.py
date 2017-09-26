@@ -1,22 +1,6 @@
 #!/usr/bin/env python
 import re, json, urllib3, os, sys, glob, shutil
 
-#TODO shitty but I love colors :D
-class bcolors:
-    PURPLE = '\033[95m'
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
-def strip_prefix(s, prefix):
-    if s.startswith(prefix):
-        return s[len(prefix):]
-    return str(s)
-
 def get_github_release(user, name, release='latest'):
     try:
         urllib3.disable_warnings()
@@ -30,24 +14,15 @@ def get_github_release(user, name, release='latest'):
 
 def parse_github_json(data):
     try:
-        #url = data['tarball_url']
-        #author = data['author']['login']
-        #prefix = "https://github.com/" + user + "/"
-        #name = strip_prefix(data['html_url'], prefix)
-        #name = name.replace("/releases/tag/", "-")
-        #name = name[:name.rindex('-')]
-        version = strip_prefix(data['tag_name'], 'v')
-        #return url, author, name, version
-        return version
+        return data['tag_name'].lstrip('v')
     except Exception as e:
-        print(bcolors.RED + "error parsing json from github" + bcolors.ENDC)
-        pass
-    return None
+        print('\033[91m' + "error parsing json from github" + '\033[0m')
+        return None
 
 def print_ebuild(user, name, e_version, g_version=None):
-    print(bcolors.YELLOW + "local  : %s-%s" % (name, e_version) + bcolors.ENDC)
+    print('\033[93m' + "local  : %s-%s" % (name, e_version) + '\033[0m')
     if g_version:
-        print( bcolors.PURPLE + "github : %s/%s-%s" % (user, name, g_version) + bcolors.ENDC)
+        print( '\033[95m' + "github : %s/%s-%s" % (user, name, g_version) + '\033[0m')
 
 def parse_ebuild_name(path):
     basename = os.path.basename(path)
@@ -70,7 +45,7 @@ def parse_ebuild_content(path):
                     return m.group(1), m.group(2)
     return None
 
-def ask(prompt, error_msg = 'try again', valid=['y','n','yes','no']):
+def ask(prompt, error_msg = 'try again', valid=['y','n']):
         while True:
             value = input(prompt + " ")
             ret = value.strip().lower()[0]
@@ -88,17 +63,18 @@ def check_ebuild(path):
         if e_name == "${PN}":
             e_name = name
 
+        print('\033[93m' + "local  : %s-%s" % (e_name, e_version) + '\033[0m')
         data = get_github_release(e_user, e_name)
         g_version = parse_github_json(data)
-        print_ebuild(e_user, e_name, e_version, g_version)
-
-        if g_version and (str(e_version) < str(g_version)):
-            if ask("Do you want to update this ebuild? [y/N]") == 'y':
-                print(bcolors.BLUE + "updating ebuild ... " + e_version + " => " + g_version + bcolors.ENDC)
-                npath = path.replace(e_version, g_version)
-                shutil.copy(path,npath)
-                if ask("Do you want do delete the old one? :O [y/N]") == 'y':
-                    os.remove(path)
+        if g_version:
+            print( '\033[95m' + "github : %s/%s-%s" % (e_user, e_name, g_version) + '\033[0m')
+            if (str(e_version) < str(g_version)):
+                if ask("Do you want to update this ebuild? [y/N]") == 'y':
+                    print('\033[94m' + "updating ebuild ... " + e_version + " => " + g_version + '\033[0m')
+                    npath = path.replace(e_version, g_version)
+                    shutil.copy(path,npath)
+                    if ask("Do you want do delete the old one? :O [y/N]") == 'y':
+                        os.remove(path)
     except Exception as e:
         pass
 
@@ -112,4 +88,3 @@ if __name__ == "__main__":
                 if fpath:
                     for e in fpath:
                         check_ebuild(e)
-
