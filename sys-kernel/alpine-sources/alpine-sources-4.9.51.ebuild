@@ -8,7 +8,7 @@ inherit kernel-2
 detect_version
 detect_arch
 
-DESCRIPTION="kernel linux ${KV_MAJOR}.${KV_MINOR} + grsecurity patch by alpine linux"
+DESCRIPTION="Kernel Linux ${KV_MAJOR}.${KV_MINOR} + grsecurity patch by alpine linux"
 HOMEPAGE="https://github.com/alpinelinux/aports/tree/master/main/linux-hardened"
 IUSE=""
 RDEPEND=">=sys-devel/gcc-4.5"
@@ -23,6 +23,8 @@ src_prepare() {
 }
 pkg_postinst()
 {
-	elog "This is not an official ebuild, do not report problems in Gentoo Bugzilla."
-	elog "Report any problems on the GitHub repository https://github.com/hexec/gentoo-italia/issues"
+	kernel-2_pkg_postinst
+	einfo "This is not an official ebuild, do not report problems in Gentoo Bugzilla."
+	einfo "Report any problems on the GitHub repository https://github.com/hexec/gentoo-italia/issues"
+	
 }
