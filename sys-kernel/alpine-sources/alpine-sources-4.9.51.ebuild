@@ -25,6 +25,6 @@ pkg_postinst()
 {
 	kernel-2_pkg_postinst
 	einfo "This is not an official ebuild, do not report problems in Gentoo Bugzilla."
-	einfo "Report any problems on the GitHub repository https://github.com/hexec/gentoo-italia/issues"
+	einfo "Report any problems on the GitHub repository https://github.com/gentoo-italia/gentoo-italia/issues"
 	
 }

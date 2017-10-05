@@ -24,5 +24,5 @@ src_prepare() {
 pkg_postinst()
 {
 	elog "This is not an official ebuild, do not report problems in Gentoo Bugzilla."
-	elog "Report any problems on the GitHub repository https://github.com/hexec/gentoo-italia/issues"
+	elog "Report any problems on the GitHub repository https://github.com/gentoo-italia/gentoo-italia/issues"
 }
