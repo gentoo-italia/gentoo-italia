@@ -13,7 +13,7 @@ SRC_URI="https://github.com/getpelican/pelican/archive/${PV}.tar.gz -> ${P}.tar.
 LICENSE="AGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc examples markdown test"
+IUSE="doc examples +markdown test"
 
 DEPEND=">=dev-python/feedgenerator-1.9[${PYTHON_USEDEP}]
 	>=dev-python/jinja-2.7[${PYTHON_USEDEP}]
