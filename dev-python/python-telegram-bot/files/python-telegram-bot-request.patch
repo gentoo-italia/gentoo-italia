@@ -1,9 +1,9 @@
-diff -Naur python-telegram-bot-8.0.0/telegram/utils/request.py python-telegram-bot-8.0.0_b/telegram/utils/request.py
---- python-telegram-bot-8.0.0/telegram/utils/request.py	2017-09-01 10:38:15.000000000 +0200
-+++ python-telegram-bot-8.0.0_b/telegram/utils/request.py	2017-09-17 15:05:39.690363214 +0200
-@@ -30,10 +30,10 @@
- 
+diff -Naur python-telegram-bot-8.1.1/telegram/utils/request.py python-telegram-bot-8.1.1_b/telegram/utils/request.py
+--- python-telegram-bot-8.1.1/telegram/utils/request.py	2017-09-25 20:58:53.000000000 +0200
++++ python-telegram-bot-8.1.1_b/telegram/utils/request.py	2017-10-16 23:58:25.559457415 +0200
+@@ -31,10 +31,10 @@
  import certifi
+ 
  try:
 -    import telegram.vendor.ptb_urllib3.urllib3 as urllib3
 -    import telegram.vendor.ptb_urllib3.urllib3.contrib.appengine as appengine
@@ -16,7 +16,7 @@ diff -Naur python-telegram-bot-8.0.0/telegram/utils/request.py python-telegram-b
  except ImportError:  # pragma: no cover
      warnings.warn("python-telegram-bot wasn't properly installed. Please refer to README.rst on "
                    "how to properly install.")
-@@ -91,7 +91,7 @@
+@@ -92,7 +92,7 @@
          kwargs = dict(
              maxsize=con_pool_size,
              cert_reqs='CERT_REQUIRED',
