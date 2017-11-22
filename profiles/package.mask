@@ -1,1 +1,1 @@
-=app-admin/sudo-1.8.22_p1
+=app-admin/sudo-1.8.22_p2
