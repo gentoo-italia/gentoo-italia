@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/alpinelinux/aports/tree/master/main/linux-hardened"
 IUSE=""
 RDEPEND=">=sys-devel/gcc-4.5"
 
-SRC_URI="${KERNEL_URI} https://dev.alpinelinux.org/~ncopa/grsec/hardened-3.1-${PV}-201704252333-alpine.patch"
+SRC_URI="${KERNEL_URI} https://dev.alpinelinux.org/~ncopa/grsec/hardened-3.1-${PV}-201704252333-alpine2.patch"
 
 KEYWORDS="~amd64 ~x86"
 
