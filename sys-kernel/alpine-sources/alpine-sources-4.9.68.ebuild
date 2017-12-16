@@ -19,7 +19,7 @@ KEYWORDS="~amd64 ~x86"
 
 src_prepare() {
 	default
-	eapply "${DISTDIR}"/*-alpine.patch
+	eapply "${DISTDIR}"/*-alpine2.patch
 }
 pkg_postinst()
 {
