@@ -1,6 +1,6 @@
-diff -Naur python-telegram-bot-8.1.1/telegram/utils/request.py python-telegram-bot-8.1.1_b/telegram/utils/request.py
---- python-telegram-bot-8.1.1/telegram/utils/request.py	2017-09-25 20:58:53.000000000 +0200
-+++ python-telegram-bot-8.1.1_b/telegram/utils/request.py	2017-10-16 23:58:25.559457415 +0200
+diff -Naur python-telegram-bot-9.0.0/telegram/utils/request.py python-telegram-bot-9.0.0_b/telegram/utils/request.py
+--- python-telegram-bot-9.0.0/telegram/utils/request.py	2017-09-25 20:58:53.000000000 +0200
++++ python-telegram-bot-9.0.0_b/telegram/utils/request.py	2017-10-16 23:58:25.559457415 +0200
 @@ -31,10 +31,10 @@
  import certifi
  

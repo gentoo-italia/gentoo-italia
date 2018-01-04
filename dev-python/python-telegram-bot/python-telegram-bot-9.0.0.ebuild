@@ -25,9 +25,9 @@ dev-python/setuptools[${PYTHON_USEDEP}]
 "
 
 python_prepare_all() {
-	#local PATCHES=(
-	#	"${FILESDIR}"/${PN}-request.patch
-	#)
+	local PATCHES=(
+		"${FILESDIR}"/${PN}-request.patch
+	)
 	rm -rf ${S}/telegram/vendor
 	distutils-r1_python_prepare_all
 }
