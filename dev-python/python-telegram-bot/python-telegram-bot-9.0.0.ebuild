@@ -9,7 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="Python wrapper wrapper for telegram you can't refuse"
 HOMEPAGE="https://github.com/${PN}/${PN}"
-SRC_URI="https://github.com/${PN}/${PN}/releases/download/V${PV}/${P}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/${P}.tar.gz"
 
 LICENSE="LGPL-V3"
 SLOT="0"
@@ -25,9 +25,9 @@ dev-python/setuptools[${PYTHON_USEDEP}]
 "
 
 python_prepare_all() {
-	local PATCHES=(
-		"${FILESDIR}"/${PN}-request.patch
-	)
+	#local PATCHES=(
+	#	"${FILESDIR}"/${PN}-request.patch
+	#)
 	rm -rf ${S}/telegram/vendor
 	distutils-r1_python_prepare_all
 }
