@@ -10,7 +10,7 @@ SRC_URI=""
 LICENSE=""
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+gedit +eog +baobab +gnome-disk-utility +gnome-system-monitor +dconf-editor +gnome-tweak-tool +file-roller +gparted +seahorse +gnome-terminal +chrome"
+IUSE="+gedit +eog +baobab +gnome-disk-utility +gnome-system-monitor +dconf-editor +gnome-tweaks +file-roller +gparted +seahorse +gnome-terminal +chrome"
 
 DEPEND=""
 RDEPEND="${DEPEND}
@@ -28,7 +28,7 @@ gnome-terminal? ( x11-terms/gnome-terminal )
 file-roller? ( app-arch/file-roller )
 gnome-disk-utility? ( sys-apps/gnome-disk-utility )
 dconf-editor? ( gnome-base/dconf-editor )
-gnome-tweak-tool? ( gnome-extra/gnome-tweak-tool )
+gnome-tweaks? ( gnome-extra/gnome-tweaks )
 baobab? ( sys-apps/baobab )
 gparted? ( sys-block/gparted )
 seahorse? ( app-crypt/seahorse )
