@@ -20,7 +20,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 
-IUSE="libcap systemd xwayland"
+IUSE="libcap systemd xwayland elogind"
 
 DEPEND="
 x11-libs/libxkbcommon
@@ -36,6 +36,7 @@ x11-proto/xcb-proto
 libcap? ( sys-libs/libcap )
 systemd? ( sys-apps/systemd )
 xwayland? ( x11-base/xorg-server[wayland] )
+elogind? ( sys-auth/elogind )
 "
 RDEPEND="${DEPEND}"
 
@@ -43,7 +44,9 @@ src_configure() {
         local emesonargs=(
                 -Denable_libcap=$(usex libcap true false)
                 -Denable_systemd=$(usex systemd true false)
-                -Denable_xwayland=$(usex systemd true false)
+                -Denable_elogind=$(usex elogind true false)
+                -Denable_xwayland=$(usex xwayland true false)
+                
         )
         meson_src_configure
 }
