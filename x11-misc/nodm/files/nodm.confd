@@ -1,0 +1,23 @@
+# /etc/conf.d/nodm: config file for /etc/init.d/nodm
+
+# See the nodm(8) manpage for more info.
+
+# The user to automatically login.
+NODM_USER=""
+
+# The VT the X server should run on.
+NODM_FIRST_VT="7"
+
+# The options to pass to the X server.
+NODM_X_OPTIONS="-nolisten tcp -br -novtswitch -quiet"
+
+# The minimum time (in seconds) that a session should
+# last to be considered successful. nodm will restart
+# the session if it lasts less than this time.
+NODM_MIN_SESSION_TIME="60"
+
+# The X session to start.
+NODM_XSESSION="/etc/X11/Sessions/Xsession"
+
+# The options to pass to nodm.
+NODM_OPTS=""

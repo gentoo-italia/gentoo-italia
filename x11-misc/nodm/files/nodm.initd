@@ -1,0 +1,22 @@
+#!/sbin/openrc-run
+
+depend() {
+	need local
+}
+
+start() {
+	export NODM_USER NODM_FIRST_VT NODM_X_OPTIONS \
+		NODM_MIN_SESSION_TIME NODM_XSESSION
+
+	ebegin "Starting nodm"
+	start-stop-daemon --start --quiet --background --make-pidfile \
+		--pidfile /var/run/nodm.pid --exec /usr/sbin/nodm \
+		-- ${NODM_OPTS}
+	eend $?
+}
+
+stop () {
+	ebegin "Stopping nodm"
+	start-stop-daemon --stop --quiet --pidfile /var/run/nodm.pid
+	eend $?
+}

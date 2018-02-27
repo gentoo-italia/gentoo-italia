@@ -1,0 +1,16 @@
+[Unit]
+Description=NoDM Display Manager
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/etc/conf.d/nodm
+ExecStart=/bin/sh -c "export NODM_USER NODM_FIRST_VT NODM_X_OPTIONS NODM_MIN_SESSION_TIME NODM_XSESSION; /usr/sbin/nodm -- ${NODM_OPTS}"
+
+# Give a reasonable amount of time for the server to start up/shut down
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target

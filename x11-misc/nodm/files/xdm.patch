@@ -1,0 +1,18 @@
+--- /etc/init.d/xdm.orig	2011-12-21 11:50:37.000000000 +1100
++++ /etc/init.d/xdm	2012-04-12 16:28:41.058098417 +1000
+@@ -101,6 +101,15 @@
+ 			PIDFILE=/var/run/lightdm.pid
+ 			START_STOP_ARGS="--background"
+ 			;;
++		nodm)
++			EXE=/usr/sbin/nodm
++			PIDFILE=/var/run/nodm.pid
++			START_STOP_ARGS="--background --make-pidfile"
++
++			source /etc/nodm.conf
++			export NODM_USER NODM_FIRST_VT NODM_X_OPTIONS \
++				NODM_MIN_SESSION_TIME NODM_XSESSION
++			;;
+ 		*)
+ 			# first find out if there is such executable
+ 			EXE="$(which ${MY_XDM} 2>/dev/null)"
