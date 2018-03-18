@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -14,23 +14,24 @@ case ${P} in
 esac
 
 DESCRIPTION="Allows users or groups to run commands as other users"
-HOMEPAGE="http://www.sudo.ws/"
-SRC_URI="http://www.sudo.ws/sudo/dist/${uri_prefix}${MY_P}.tar.gz
+HOMEPAGE="https://www.sudo.ws/"
+SRC_URI="https://www.sudo.ws/sudo/dist/${uri_prefix}${MY_P}.tar.gz
 	ftp://ftp.sudo.ws/pub/sudo/${uri_prefix}${MY_P}.tar.gz"
 
 # Basic license is ISC-style as-is, some files are released under
 # 3-clause BSD license
 LICENSE="ISC BSD"
 SLOT="0"
-#if [[ ${PV} != *_beta* ]] && [[ ${PV} != *_rc* ]] ; then
-#	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~sparc-fbsd ~x86-fbsd ~sparc-solaris"
-#fi
-IUSE="gcrypt ldap nls pam offensive openssl selinux skey +sendmail"
+if [[ ${PV} != *_beta* ]] && [[ ${PV} != *_rc* ]] ; then
+	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~sparc-solaris"
+fi
+IUSE="gcrypt ldap nls pam offensive openssl sasl selinux +sendmail skey"
 
 CDEPEND="
 	gcrypt? ( dev-libs/libgcrypt:= )
 	openssl? ( dev-libs/openssl:0= )
 	pam? ( virtual/pam )
+	sasl? ( dev-libs/cyrus-sasl )
 	skey? ( >=sys-auth/skey-1.1.5-r1 )
 	ldap? (
 		>=net-nds/openldap-2.1.30-r1
@@ -130,6 +131,7 @@ src_configure() {
 		$(use_enable gcrypt)
 		$(use_enable nls)
 		$(use_enable openssl)
+		$(use_enable sasl)
 		$(use_with offensive insults)
 		$(use_with offensive all-insults)
 		$(use_with ldap ldap_conf_file /etc/ldap.conf.sudo)
