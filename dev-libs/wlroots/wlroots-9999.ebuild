@@ -20,7 +20,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 
-IUSE="libcap systemd xwayland elogind"
+IUSE="libcap systemd xwayland xcb-errors elogind"
 
 DEPEND="
 x11-libs/libxkbcommon
@@ -45,6 +45,7 @@ src_configure() {
                 -Denable_libcap=$(usex libcap true false)
                 -Denable_systemd=$(usex systemd true false)
                 -Denable_elogind=$(usex elogind true false)
+                -Denable_xcb_errors=$(usex xcb-errors true false)
                 -Denable_xwayland=$(usex xwayland true false)
                 
         )
