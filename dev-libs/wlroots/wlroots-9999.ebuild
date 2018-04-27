@@ -32,7 +32,7 @@ virtual/libudev
 x11-libs/pixman
 media-libs/mesa[egl,gles2,gbm]
 x11-libs/libxcb
-x11-proto/xcb-proto
+x11-base/xcb-proto
 libcap? ( sys-libs/libcap )
 systemd? ( sys-apps/systemd )
 xwayland? ( x11-base/xorg-server[wayland] )
