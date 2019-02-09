@@ -4,11 +4,11 @@
 EAPI=6
 
 if [ "${PV}" = "9999" ]; then
-	inherit git-r3
-	EGIT_REPO_URI="https://github.com/luigirizzo/${PN}.git"
+  inherit git-r3
+  EGIT_REPO_URI="https://github.com/luigirizzo/${PN}.git"
 else
-	inherit vcs-snapshot
-	SRC_URI="https://github.com/luigirizzo/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+  inherit vcs-snapshot
+  SRC_URI="https://github.com/luigirizzo/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
 KEYWORDS="~amd64"
@@ -22,13 +22,10 @@ IUSE="no-drivers"
 DEPEND="sys-libs/glibc"
 
 src_configure() {
-	./configure 	--kernel-sources=/usr/src/linux-4.9.47-gentoo \
-                --no-drivers \
-                --driver-suffix="_netmap" \
-                --install-mod-path="${D}" \
-                --prefix="${D}/usr/local"
+    ./configure --kernel-sources=/usr/src/linux --drivers="veth.c" \
+                --driver-suffix="_netmap" --install-mod-path="${D}" --prefix="${D}/usr/local" --destdir="${D}"
 }
 
 src_compile(){
-	emake
+    emake
 }

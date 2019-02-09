@@ -32,7 +32,7 @@ HDEPEND=""
 
 LIBDEPEND="
 	>=x11-libs/gtk+-3.0
-	>=x11-libs/vte-ng-0.44.1.9999
+	x11-libs/vte:2.91
 "
 
 DEPEND="${LIBDEPEND}"
