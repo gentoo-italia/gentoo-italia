@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -9,7 +9,7 @@ HOMEPAGE="https://git.gnome.org/browse/libgtop"
 
 LICENSE="GPL-2"
 SLOT="2/10" # libgtop soname version
-KEYWORDS=""
+KEYWORDS="alpha amd64 arm ia64 ~mips ppc ppc64 ~sh sparc x86 ~x86-fbsd"
 IUSE="+introspection"
 
 RDEPEND="
@@ -26,4 +26,9 @@ src_configure() {
 	gnome2_src_configure \
 		--disable-static \
 		$(use_enable introspection)
+}
+
+src_install() {
+	addwrite "/usr/bin/libgtop_server2"
+	gnome2_src_install
 }
