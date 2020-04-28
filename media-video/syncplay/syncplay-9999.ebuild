@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python3_8 )
+PYTHON_COMPAT=( python3_7 )
 
 inherit git-r3 python-r1
 
